@@ -3,8 +3,10 @@ import { extendTheme, theme as ChakraTheme } from "@chakra-ui/react";
 const Theme = extendTheme({
     fonts: {
         ...ChakraTheme.fonts,
-        body: `"Open Sans","Segoe UI",sans-serif`,
-        heading: `"Open Sans","Segoe UI",sans-serif`,
+        // body: `"Open Sans","Segoe UI",sans-serif`,
+        // heading: `"Open Sans","Segoe UI",sans-serif`,
+        body: `"Nunito","Segoe UI",sans-serif`,
+        heading: `"Nunito","Segoe UI",sans-serif`,
     },
     colors: {
         primary: "#0d6efd",

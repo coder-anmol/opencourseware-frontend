@@ -1,4 +1,6 @@
-import "@fontsource/open-sans";
+// import "@fontsource/open-sans";
+
+import "@fontsource/nunito";
 import { ChakraProvider } from "@chakra-ui/react";
 import DefaultLayout from "../layouts/default";
 import Theme from "../theme";
