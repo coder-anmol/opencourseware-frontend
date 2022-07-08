@@ -1,5 +1,11 @@
-function Header() {
-    return <h1>Header</h1>;
-}
+import Navbar from "./Navbar";
+
+const Header = () => {
+    return (
+        <>
+            <Navbar />
+        </>
+    );
+};
 
 export default Header;

@@ -1,3 +1,10 @@
+import Hero from "@/components/Hero";
+import { Container } from "@chakra-ui/react";
+
 export default function Home() {
-    return <h1>Good Bye</h1>;
+    return (
+        <Container maxW={"container.xxl"}>
+            <Hero />
+        </Container>
+    );
 }
