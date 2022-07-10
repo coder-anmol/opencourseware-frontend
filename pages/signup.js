@@ -2,7 +2,6 @@ import {
     Input,
     InputGroup,
     InputRightElement,
-    Radio,
     RadioGroup,
     FormLabel,
     FormControl,
