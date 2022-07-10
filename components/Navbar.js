@@ -37,27 +37,29 @@ const Navbar = () => {
                             py={"3"}
                         >
                             {/* logo */}
-                            <Box
-                                display={{ lg: "flex" }}
-                                alignItems={{ lg: "center" }}
-                                gap={{ lg: "3" }}
-                                cursor={"pointer"}
-                            >
-                                <Box w={"45px"} h={"45px"} pos={"relative"}>
-                                    <Image
-                                        alt="Open Course Ware logo"
-                                        src={"/logo.png"}
-                                        layout={"fill"}
-                                        objectFit="cover"
-                                    />
-                                </Box>
-                                <Heading
-                                    display={{ base: "none", lg: "block" }}
-                                    fontSize={"3xl"}
+                            <Link href={"/"}>
+                                <Box
+                                    display={{ lg: "flex" }}
+                                    alignItems={{ lg: "center" }}
+                                    gap={{ lg: "3" }}
+                                    cursor={"pointer"}
                                 >
-                                    OpenCourseWare
-                                </Heading>
-                            </Box>
+                                    <Box w={"45px"} h={"45px"} pos={"relative"}>
+                                        <Image
+                                            alt="Open Course Ware logo"
+                                            src={"/logo.png"}
+                                            layout={"fill"}
+                                            objectFit="cover"
+                                        />
+                                    </Box>
+                                    <Heading
+                                        display={{ base: "none", lg: "block" }}
+                                        fontSize={"3xl"}
+                                    >
+                                        OpenCourseWare
+                                    </Heading>
+                                </Box>
+                            </Link>
 
                             {/* hamburger */}
                             <Box
@@ -146,10 +148,10 @@ const Navbar = () => {
                                     },
                                 }}
                             >
-                                <Link href={"/login"}>
+                                <Link href={"/"}>
                                     <ListItem>Home</ListItem>
                                 </Link>
-                                <Link href={"/login"}>
+                                <Link href={"/courses"}>
                                     <ListItem>Courses</ListItem>
                                 </Link>
                                 <Link href={"/contact"}>
