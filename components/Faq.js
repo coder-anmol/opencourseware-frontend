@@ -10,7 +10,14 @@ import {
 
 const Faq = () => {
     return (
-        <Box my={"20"}>
+        <Box
+            my={"20"}
+            bg={"white"}
+            rounded={"xl"}
+            shadow={"xl"}
+            px={{ base: "3", lg: "8" }}
+            py={{ base: "10", lg: "12" }}
+        >
             <Heading textAlign={"center"}>{"FAQ's"}</Heading>
             <Accordion
                 allowToggle

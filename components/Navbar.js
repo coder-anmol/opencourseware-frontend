@@ -1,4 +1,14 @@
-import { Box, Container, Heading, List, ListItem } from "@chakra-ui/react";
+import {
+    Box,
+    Container,
+    Heading,
+    List,
+    ListItem,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+} from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "./Button/index.js";
@@ -162,11 +172,60 @@ const Navbar = () => {
                                         <Button>Login</Button>
                                     </ListItem>
                                 </Link>
+
+                                {/* Profile */}
+                                <ListItem>
+                                    <Menu>
+                                        <MenuButton>
+                                            <Profile />
+                                        </MenuButton>
+                                        <MenuList
+                                            mt={2}
+                                            rounded={"xl"}
+                                            shadow={"xl"}
+                                        >
+                                            <MenuItem>
+                                                <Link href={"/"}>
+                                                    Dashboard
+                                                </Link>
+                                            </MenuItem>
+                                            <MenuItem>
+                                                <Link href={"/"}>Profile</Link>
+                                            </MenuItem>
+                                            <MenuItem>
+                                                <Link href={"/"}>Logout</Link>
+                                            </MenuItem>
+                                        </MenuList>
+                                    </Menu>
+                                </ListItem>
                             </List>
                         </Box>
                     </Box>
                 </Box>
             </Container>
+        </Box>
+    );
+};
+
+const Profile = () => {
+    return (
+        <Box
+            w={"45px"}
+            h={"45px"}
+            pos={"relative"}
+            __css={{
+                "& img": {
+                    rounded: "full",
+                },
+            }}
+            mb={-2}
+        >
+            <Image
+                alt="Open Course Ware logo"
+                src={"/default-profile.png"}
+                layout={"fill"}
+                objectFit="cover"
+            />
         </Box>
     );
 };
