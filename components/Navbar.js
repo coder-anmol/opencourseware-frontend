@@ -190,7 +190,9 @@ const Navbar = () => {
                                                 </Link>
                                             </MenuItem>
                                             <MenuItem>
-                                                <Link href={"/"}>Profile</Link>
+                                                <Link href={"/profile"}>
+                                                    Profile
+                                                </Link>
                                             </MenuItem>
                                             <MenuItem>
                                                 <Link href={"/"}>Logout</Link>
