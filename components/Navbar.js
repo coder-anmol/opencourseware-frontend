@@ -1,11 +1,17 @@
 import { Box, Container, Heading, List, ListItem } from "@chakra-ui/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "./Button/index.js";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
     const [navbar, setNavbar] = useState(false);
+    const router = useRouter();
+
+    useEffect(() => {
+        setNavbar(false);
+    }, [router.route]);
 
     return (
         <Box as={"nav"} pos={"fixed"} top={"2"} zIndex={"100"} width="100%">
@@ -146,7 +152,7 @@ const Navbar = () => {
                                 <Link href={"/login"}>
                                     <ListItem>Courses</ListItem>
                                 </Link>
-                                <Link href={"/#contact"}>
+                                <Link href={"/contact"}>
                                     <ListItem>Contact</ListItem>
                                 </Link>
                                 <Link href={"/login"}>
