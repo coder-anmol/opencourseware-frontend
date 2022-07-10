@@ -13,16 +13,6 @@ import { Formik, Form, Field } from "formik";
 import validator from "validator";
 import Button from "@/components/Button";
 
-/*
-validator.isStrongPassword(value, {
-                minLength: 8,
-                minLowercase: 1,
-                minUppercase: 1,
-                minNumbers: 1,
-                minSymbols: 1,
-            })
-*/
-
 const Contact = () => {
     const initialFields = {
         name: "",
@@ -69,8 +59,17 @@ const Contact = () => {
     };
 
     return (
-        <Container maxW={"container.xxl"}>
-            <Box my={{ base: "28", lg: "40" }}>
+        <Container maxW={"container.lg"}>
+            <Box
+                mt={{ base: "28", lg: "36" }}
+                mb={{ base: "20", lg: "28" }}
+                pt={"1"}
+                pb={"1"}
+                px={"6"}
+                rounded={"3xl"}
+                bg={"white"}
+                shadow={"2xl"}
+            >
                 <Formik
                     initialValues={initialFields}
                     onSubmit={(values, actions) => {
