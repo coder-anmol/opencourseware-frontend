@@ -185,7 +185,7 @@ const Navbar = () => {
                                             shadow={"xl"}
                                         >
                                             <MenuItem>
-                                                <Link href={"/"}>
+                                                <Link href={"/dashboard"}>
                                                     Dashboard
                                                 </Link>
                                             </MenuItem>
