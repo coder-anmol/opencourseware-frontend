@@ -6,7 +6,6 @@ export default function Home() {
     return (
         <Container maxW={"container.xxl"}>
             <Hero />
-            {/* Todo: Faq */}
             <Faq />
         </Container>
     );
