@@ -2,6 +2,7 @@ import { Box, Container, Heading, List, ListItem } from "@chakra-ui/react";
 import { useState } from "react";
 import Image from "next/image";
 import Button from "./Button/index.js";
+import Link from "next/link";
 
 const Navbar = () => {
     const [navbar, setNavbar] = useState(false);
@@ -139,12 +140,20 @@ const Navbar = () => {
                                     },
                                 }}
                             >
-                                <ListItem>Home</ListItem>
-                                <ListItem>Courses</ListItem>
-                                <ListItem>Contact</ListItem>
-                                <ListItem>
-                                    <Button>Login</Button>
-                                </ListItem>
+                                <Link href={"/login"}>
+                                    <ListItem>Home</ListItem>
+                                </Link>
+                                <Link href={"/login"}>
+                                    <ListItem>Courses</ListItem>
+                                </Link>
+                                <Link href={"/#contact"}>
+                                    <ListItem>Contact</ListItem>
+                                </Link>
+                                <Link href={"/login"}>
+                                    <ListItem>
+                                        <Button>Login</Button>
+                                    </ListItem>
+                                </Link>
                             </List>
                         </Box>
                     </Box>

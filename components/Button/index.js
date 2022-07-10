@@ -1,6 +1,6 @@
 import { Button as ChakraButton } from "@chakra-ui/react";
 
-const Button = ({ children }) => {
+const Button = (props) => {
     return (
         <ChakraButton
             fontSize={"1.3rem"}
@@ -15,9 +15,8 @@ const Button = ({ children }) => {
             _active={{
                 bg: "#025BE1",
             }}
-        >
-            {children}
-        </ChakraButton>
+            {...props}
+        ></ChakraButton>
     );
 };
 
