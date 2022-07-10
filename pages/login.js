@@ -10,12 +10,14 @@ import {
     InputGroup,
     InputRightElement,
     Icon,
+    Text,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import validator from "validator";
 import Button from "@/components/Button";
 import { BiShow, BiHide } from "react-icons/bi";
 import { useState } from "react";
+import Link from "next/link";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
@@ -61,7 +63,8 @@ const Login = () => {
     return (
         <Container maxW={"container.sm"}>
             <Box
-                my={{ base: "28", lg: "36" }}
+                mt={{ base: "28", lg: "36" }}
+                mb={{ base: "20", lg: "28" }}
                 p={"6"}
                 rounded={"3xl"}
                 bg={"white"}
@@ -82,7 +85,7 @@ const Login = () => {
                         <Form
                             id="contact"
                             style={{
-                                margin: "var(--chakra-sizes-16) 0",
+                                margin: "var(--chakra-sizes-4) 0",
                             }}
                         >
                             <Heading
@@ -90,7 +93,7 @@ const Login = () => {
                                 textAlign={"center"}
                                 mb={4}
                             >
-                                Sign In
+                                Login
                             </Heading>
 
                             {/*email */}
@@ -203,8 +206,26 @@ const Login = () => {
                                     isLoading={props.isSubmitting}
                                     type="submit"
                                 >
-                                    Sign In
+                                    Login
                                 </Button>
+                            </HStack>
+
+                            <HStack mt={"9"}>
+                                <Text>
+                                    {" "}
+                                    {"Don't have an account?"}{" "}
+                                    <Link href={"/signup"}>
+                                        <span
+                                            style={{
+                                                color: "var(--chakra-colors-primary)",
+                                                fontWeight: "bold",
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            Sign up
+                                        </span>
+                                    </Link>
+                                </Text>
                             </HStack>
                         </Form>
                     )}
