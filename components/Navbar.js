@@ -184,19 +184,23 @@ const Navbar = () => {
                                             rounded={"xl"}
                                             shadow={"xl"}
                                         >
-                                            <MenuItem>
-                                                <Link href={"/dashboard"}>
-                                                    Dashboard
-                                                </Link>
-                                            </MenuItem>
-                                            <MenuItem>
-                                                <Link href={"/profile"}>
-                                                    Profile
-                                                </Link>
-                                            </MenuItem>
-                                            <MenuItem>
-                                                <Link href={"/"}>Logout</Link>
-                                            </MenuItem>
+                                            <Link href={"/dashboard"}>
+                                                <a>
+                                                    <MenuItem>
+                                                        Dashboard
+                                                    </MenuItem>
+                                                </a>
+                                            </Link>
+                                            <Link href={"/profile"}>
+                                                <a>
+                                                    <MenuItem>Profile</MenuItem>
+                                                </a>
+                                            </Link>
+                                            <Link href={"/"}>
+                                                <a>
+                                                    <MenuItem>Logout</MenuItem>
+                                                </a>
+                                            </Link>
                                         </MenuList>
                                     </Menu>
                                 </ListItem>

@@ -1,9 +1,8 @@
-// import "@fontsource/open-sans";
-
 import "@fontsource/nunito";
 import { ChakraProvider } from "@chakra-ui/react";
 import DefaultLayout from "layouts/default";
 import ProfileLayout from "layouts/profile";
+import AdminLayout from "layouts/admin";
 import Theme from "../theme";
 import ProgressBar from "nextjs-progressbar";
 
@@ -11,6 +10,7 @@ import ProgressBar from "nextjs-progressbar";
 const layouts = {
     default: DefaultLayout,
     profile: ProfileLayout,
+    admin: AdminLayout,
 };
 
 function MyApp({ Component, pageProps }) {
