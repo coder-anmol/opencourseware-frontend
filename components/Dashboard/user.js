@@ -1,4 +1,12 @@
-import { Heading, Box, Container, Stack } from "@chakra-ui/react";
+import {
+    Heading,
+    Box,
+    Container,
+    Stack,
+    HStack,
+    Button,
+    Select,
+} from "@chakra-ui/react";
 import CourseCard from "../Card/course";
 
 const UserDashboard = () => {
@@ -53,9 +61,73 @@ const UserDashboard = () => {
                         </Heading>
 
                         {/* current course */}
-                        <Box py={3}>
+                        <Stack gap={4} py={3}>
                             <CourseCard />
-                        </Box>
+                        </Stack>
+                    </Box>
+
+                    {/* Enrolled Courses */}
+                    <Box
+                        mb={{ base: "6" }}
+                        px={{ base: "3", sm: "4", md: "5", lg: "6" }}
+                        py={{ base: "3", sm: "4", md: "5", lg: "6" }}
+                        rounded={"xl"}
+                        shadow={"xl"}
+                        bg={"white"}
+                    >
+                        <Heading
+                            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+                            mb={{
+                                base: "1",
+                                sm: "3",
+                                md: "4",
+                                lg: "6",
+                            }}
+                        >
+                            My Enrollments
+                        </Heading>
+
+                        <HStack
+                            justify={"space-between"}
+                            align={"center"}
+                            mt={{ base: "5" }}
+                            mb={{ base: "2" }}
+                        >
+                            <HStack gap={{ base: "2" }} align={"center"}>
+                                <Heading fontSize={{ base: "2xl", md: "3xl" }}>
+                                    All
+                                </Heading>
+                                <Button
+                                    w={"30px"}
+                                    h={"30px"}
+                                    p={"5"}
+                                    rounded={"full"}
+                                >
+                                    13
+                                </Button>
+                            </HStack>
+                            <Box>
+                                <Select
+                                    variant="filled"
+                                    placeholder="Filter By Category"
+                                    fontSize={"lg"}
+                                >
+                                    <option>Python</option>
+                                    <option>JavaScript</option>
+                                    <option>C++</option>
+                                    <option>Data Structures</option>
+                                </Select>
+                            </Box>
+                        </HStack>
+
+                        {/* current course */}
+                        <Stack gap={4} py={3}>
+                            <CourseCard />
+                            <CourseCard />
+                            <CourseCard />
+                            <CourseCard />
+                            <CourseCard />
+                        </Stack>
                     </Box>
                 </Container>
             </Box>

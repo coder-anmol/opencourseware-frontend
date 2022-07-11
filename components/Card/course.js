@@ -2,12 +2,12 @@ import {
     AspectRatio,
     Box,
     Heading,
-    HStack,
     Stack,
     Text,
     Progress,
 } from "@chakra-ui/react";
 import Image from "next/image";
+
 const CourseCard = () => {
     return (
         <Box
@@ -17,8 +17,9 @@ const CourseCard = () => {
             p={{ base: 3, sm: "4", md: "6", lg: "8" }}
             shadow={{ base: "md", lg: "lg" }}
             cursor={"pointer"}
-            _hover={{ bg: "gray.100" }}
+            _hover={{ bg: "gray.200" }}
             transition={"all 300ms ease-in-out"}
+            userSelect={"none"}
         >
             <Box
                 display={"flex"}
@@ -27,7 +28,7 @@ const CourseCard = () => {
                 {/* Image */}
                 <AspectRatio
                     pos={"relative"}
-                    ratio={{ base: 1 / 1, lg: 4 / 3 }}
+                    ratio={{ base: 1 / 1, lg: 16 / 9 }}
                     w={"35%"}
                     rounded={{ base: "lg", lg: "xl" }}
                     overflow={"hidden"}
