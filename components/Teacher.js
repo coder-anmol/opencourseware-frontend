@@ -7,7 +7,6 @@ import {
     Text,
     HStack,
 } from "@chakra-ui/react";
-import { ST } from "next/dist/shared/lib/utils";
 import Image from "next/image";
 import ReactStars from "react-rating-stars-component";
 
