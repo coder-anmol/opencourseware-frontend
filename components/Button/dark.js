@@ -1,6 +1,6 @@
 import { Button as ChakraButton } from "@chakra-ui/react";
 
-const Button = (props) => {
+const DarkButton = (props) => {
     return (
         <ChakraButton
             fontSize={"1.3rem"}
@@ -20,4 +20,4 @@ const Button = (props) => {
     );
 };
 
-export default Button;
+export default DarkButton;

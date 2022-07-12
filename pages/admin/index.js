@@ -1,49 +1,38 @@
-import { Box, Heading } from "@chakra-ui/react";
+import ModalDefault from "@/components/Modal";
+import { Box, Button, useDisclosure, Text } from "@chakra-ui/react";
 
 const Index = () => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    function action() {
+        console.log("some action");
+        onClose();
+    }
+
     return (
         <Box>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
-            <Heading>Admin Index</Heading>
+            <ModalDefault
+                isOpen={isOpen}
+                onClose={onClose}
+                title={"Modal Default"}
+                action={action}
+                actionName={"Go Ahead"}
+                closeName={"Cancel"}
+            >
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+                <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
+            </ModalDefault>
+            <Button onClick={onOpen}>Open Modal</Button>
         </Box>
     );
 };
