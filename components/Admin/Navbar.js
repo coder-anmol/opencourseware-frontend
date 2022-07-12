@@ -13,7 +13,7 @@ import Link from "next/link";
 const AdminNavbar = ({ onOpen }) => {
     return (
         <HStack
-            h={"74px"}
+            h={"76px"}
             bg={"primary"}
             borderBottom={"1px"}
             borderColor={"gray.200"}

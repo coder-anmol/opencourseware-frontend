@@ -45,7 +45,7 @@ const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
         <>
             {/* Desktop Aside Nav */}
             <Stack
-                w={"300px"}
+                w={"100%"}
                 h={"100vh"}
                 maxH={"100vh"}
                 bg={"white"}

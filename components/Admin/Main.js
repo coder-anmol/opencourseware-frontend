@@ -19,9 +19,7 @@ function AdminMain({ children }) {
                 borderBottom={{ lg: "0px" }}
                 borderColor={{ lg: "gray.200" }}
             >
-                <Box p={4} pb={0}>
-                    {children}
-                </Box>
+                <Box p={4}>{children}</Box>
             </Box>
         </Box>
     );
