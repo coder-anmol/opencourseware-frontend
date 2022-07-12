@@ -1,4 +1,5 @@
 import ModalDefault from "@/components/Modal";
+import TableDemo from "@/components/TableDemo";
 import { Box, Button, useDisclosure, Text } from "@chakra-ui/react";
 
 const Index = () => {
@@ -11,6 +12,12 @@ const Index = () => {
 
     return (
         <Box>
+            {/* Table Component Explained */}
+            <Box>
+                <TableDemo />
+            </Box>
+
+            {/* Modal Usage Explained */}
             <ModalDefault
                 isOpen={isOpen}
                 onClose={onClose}
@@ -32,7 +39,10 @@ const Index = () => {
                 <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
                 <Text>sdjfkjklsdjflsdjf kldsjkflsjdkfjsdsdjfkj sdkfjlsdjl</Text>
             </ModalDefault>
-            <Button onClick={onOpen}>Open Modal</Button>
+
+            <Box my={4}>
+                <Button onClick={onOpen}>Open Modal</Button>
+            </Box>
         </Box>
     );
 };

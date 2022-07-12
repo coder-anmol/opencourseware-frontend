@@ -7,6 +7,8 @@ import {
     Button,
     Select,
     Input,
+    Wrap,
+    WrapItem,
 } from "@chakra-ui/react";
 import PrimaryButton from "./Button";
 import CategoryCard from "@/components/Card/category";
@@ -59,32 +61,50 @@ const UserDashboard = () => {
                         </Heading>
 
                         {/* current course */}
-                        <HStack wrap={"wrap"} gap={"4"}>
-                            <Link href={"/"}>
-                                <a>
-                                    <CategoryCard>React.JS</CategoryCard>
-                                </a>
-                            </Link>
-                            <Link href={"/"}>
-                                <a>
-                                    <CategoryCard>Next.JS</CategoryCard>
-                                </a>
-                            </Link>
-                            <Link href={"/"}>
-                                <a>
-                                    <CategoryCard>Python</CategoryCard>
-                                </a>
-                            </Link>
-                            <Link href={"/"}>
-                                <a>
-                                    <CategoryCard>JavaScript</CategoryCard>
-                                </a>
-                            </Link>
-                            <Link href={"/"}>
-                                <a>
-                                    <CategoryCard>Data Structures</CategoryCard>
-                                </a>
-                            </Link>
+                        <HStack>
+                            <Wrap spacing={"3"} py={2}>
+                                <Link href={"/"}>
+                                    <a>
+                                        <WrapItem>
+                                            <CategoryCard>
+                                                React.JS
+                                            </CategoryCard>
+                                        </WrapItem>
+                                    </a>
+                                </Link>
+                                <Link href={"/"}>
+                                    <a>
+                                        <WrapItem>
+                                            <CategoryCard>Next.JS</CategoryCard>
+                                        </WrapItem>
+                                    </a>
+                                </Link>
+                                <Link href={"/"}>
+                                    <a>
+                                        <WrapItem>
+                                            <CategoryCard>Python</CategoryCard>
+                                        </WrapItem>
+                                    </a>
+                                </Link>
+                                <Link href={"/"}>
+                                    <a>
+                                        <WrapItem>
+                                            <CategoryCard>
+                                                JavaScript
+                                            </CategoryCard>
+                                        </WrapItem>
+                                    </a>
+                                </Link>
+                                <Link href={"/"}>
+                                    <a>
+                                        <WrapItem>
+                                            <CategoryCard>
+                                                Data Structures
+                                            </CategoryCard>
+                                        </WrapItem>
+                                    </a>
+                                </Link>
+                            </Wrap>
                         </HStack>
                     </Box>
 

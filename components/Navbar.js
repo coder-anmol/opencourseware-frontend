@@ -191,6 +191,11 @@ const Navbar = () => {
                                                     </MenuItem>
                                                 </a>
                                             </Link>
+                                            <Link href={"/admin"}>
+                                                <a>
+                                                    <MenuItem>Admin</MenuItem>
+                                                </a>
+                                            </Link>
                                             <Link href={"/profile"}>
                                                 <a>
                                                     <MenuItem>Profile</MenuItem>
