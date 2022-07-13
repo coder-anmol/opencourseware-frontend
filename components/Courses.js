@@ -176,11 +176,36 @@ const UserDashboard = () => {
 
                         {/* current course */}
                         <Stack gap={4} py={3}>
-                            <CoursePreviewCard />
-                            <CoursePreviewCard />
-                            <CoursePreviewCard />
-                            <CoursePreviewCard />
-                            <CoursePreviewCard />
+                            <Link href={"/courses/preview"}>
+                                <a>
+                                    <CoursePreviewCard />
+                                </a>
+                            </Link>
+                            <Link href={"/courses/preview"}>
+                                <a>
+                                    <CoursePreviewCard />
+                                </a>
+                            </Link>
+                            <Link href={"/courses/preview"}>
+                                <a>
+                                    <CoursePreviewCard />
+                                </a>
+                            </Link>
+                            <Link href={"/courses/preview"}>
+                                <a>
+                                    <CoursePreviewCard />
+                                </a>
+                            </Link>
+                            <Link href={"/courses/preview"}>
+                                <a>
+                                    <CoursePreviewCard />
+                                </a>
+                            </Link>
+                            <Link href={"/courses/preview"}>
+                                <a>
+                                    <CoursePreviewCard />
+                                </a>
+                            </Link>
                         </Stack>
                     </Box>
                 </Container>
