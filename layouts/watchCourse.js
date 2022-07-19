@@ -20,11 +20,14 @@ import {
 import Link from "next/link";
 import { BiVideo } from "react-icons/bi";
 import { HiOutlineArrowLeft } from "react-icons/hi";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/file";
 import { useState, useEffect } from "react";
 
 const WatchCourseLayout = ({ children }) => {
     const [isSSR, setIsSSR] = useState(true);
+    const [url] = useState(
+        "https://res.cloudinary.com/opencourseware/video/upload/v1657891280/uploads/v04eg4uszfvkauwejzox.mp4"
+    );
     const isMobile = useBreakpointValue({ base: true, lg: false });
 
     useEffect(() => {
@@ -73,7 +76,7 @@ const WatchCourseLayout = ({ children }) => {
                         <div>
                             {!isSSR && (
                                 <ReactPlayer
-                                    url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
+                                    url={url}
                                     width={"100%"}
                                     height={"100%"}
                                     controls={true}
