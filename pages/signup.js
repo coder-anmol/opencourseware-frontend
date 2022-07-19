@@ -1,35 +1,68 @@
 import {
     Input,
-    FormControl,
+    InputGroup,
+    InputRightElement,
+    RadioGroup,
     FormLabel,
+    FormControl,
     FormErrorMessage,
-    Textarea,
-    Heading,
-    HStack,
     Container,
     Box,
+    HStack,
+    Icon,
+    Heading,
+    Text,
 } from "@chakra-ui/react";
 import { Formik, Form, Field } from "formik";
 import validator from "validator";
 import Button from "@/components/Button";
+import { BiShow, BiHide } from "react-icons/bi";
+import { useState } from "react";
+import Link from "next/link";
 
-const Contact = () => {
+const Signup = () => {
+    const [showPassword, setShowPassword] = useState(false);
+
     const initialFields = {
-        name: "",
         email: "",
-        message: "",
+        password: "",
+        name: "",
+        role: "Student",
     };
 
     const validateName = (value) => {
         let error;
         if (value.length >= 3) {
-            if (value.length <= 100) {
+            if (value.length <= 50) {
                 error = "";
             } else {
-                error = "Name cannot exceed 100 characters";
+                error = "Name should not be greater than 50 characters";
             }
         } else {
             error = "Name should be at least 3 characters";
+        }
+        return error;
+    };
+
+    const validatePassword = (value) => {
+        let error;
+        if (
+            validator.isStrongPassword(value, {
+                minLength: 8,
+                minLowercase: 1,
+                minUppercase: 1,
+                minNumbers: 1,
+                minSymbols: 1,
+            })
+        ) {
+            if (value.length > 30) {
+                error = "Password length cannot exceed 30 characters";
+            } else {
+                error = "";
+            }
+        } else {
+            error =
+                "Password must be 8 characters long, containing at least one of capital, small, numeric and special character";
         }
         return error;
     };
@@ -44,31 +77,15 @@ const Contact = () => {
         return error;
     };
 
-    const validateMessage = (value) => {
-        let error;
-        if (value.length >= 20) {
-            if (value.length <= 300) {
-                error = "";
-            } else {
-                error = "Message cannot exceed 300 characters";
-            }
-        } else {
-            error = "Message should be at least 20 characters";
-        }
-        return error;
-    };
-
     return (
-        <Container maxW={"container.lg"}>
+        <Container maxW={"container.sm"}>
             <Box
                 mt={{ base: "28", lg: "36" }}
                 mb={{ base: "20", lg: "28" }}
-                pt={"1"}
-                pb={"1"}
-                px={"6"}
+                p={"6"}
                 rounded={"3xl"}
                 bg={"white"}
-                shadow={"2xl"}
+                shadow={"xl"}
             >
                 <Formik
                     initialValues={initialFields}
@@ -85,7 +102,7 @@ const Contact = () => {
                         <Form
                             id="contact"
                             style={{
-                                margin: "var(--chakra-sizes-16) 0",
+                                margin: "var(--chakra-sizes-4) 0",
                             }}
                         >
                             <Heading
@@ -93,7 +110,7 @@ const Contact = () => {
                                 textAlign={"center"}
                                 mb={4}
                             >
-                                Contact Us
+                                Sign Up
                             </Heading>
 
                             {/*name */}
@@ -109,7 +126,7 @@ const Contact = () => {
                                         <FormLabel
                                             fontWeight={"medium"}
                                             fontSize={"lg"}
-                                            htmlFor="name"
+                                            htmlFor="email"
                                         >
                                             Name{" "}
                                             <span
@@ -174,22 +191,22 @@ const Contact = () => {
                                 )}
                             </Field>
 
-                            {/*message */}
-                            <Field name="message" validate={validateMessage}>
+                            {/*password */}
+                            <Field name="password" validate={validatePassword}>
                                 {({ field, form }) => (
                                     <FormControl
                                         isInvalid={
-                                            form.errors.message &&
-                                            form.touched.message
+                                            form.errors.password &&
+                                            form.touched.password
                                         }
                                         mb={3}
                                     >
                                         <FormLabel
                                             fontWeight={"medium"}
                                             fontSize={"lg"}
-                                            htmlFor="email"
+                                            htmlFor="name"
                                         >
-                                            Message{" "}
+                                            Password{" "}
                                             <span
                                                 style={{
                                                     color: "var(--chakra-colors-danger)",
@@ -198,21 +215,98 @@ const Contact = () => {
                                                 *
                                             </span>
                                         </FormLabel>
-                                        <Textarea
-                                            {...field}
-                                            id="message"
-                                            placeholder="Message"
-                                            size={"lg"}
-                                            rows={"6"}
-                                            focusBorderColor={"primary"}
-                                            errorBorderColor={"danger"}
-                                        />
+                                        <InputGroup>
+                                            <Input
+                                                {...field}
+                                                id="password"
+                                                placeholder="Password"
+                                                size={"lg"}
+                                                focusBorderColor={"primary"}
+                                                errorBorderColor={"danger"}
+                                                type={
+                                                    !showPassword
+                                                        ? "password"
+                                                        : "text"
+                                                }
+                                            />
+                                            <InputRightElement
+                                                pt={"2"}
+                                                onClick={() =>
+                                                    setShowPassword(
+                                                        !showPassword
+                                                    )
+                                                }
+                                                cursor={"pointer"}
+                                                fontSize={"xl"}
+                                                color={"gray.700"}
+                                            >
+                                                <Icon
+                                                    as={
+                                                        showPassword
+                                                            ? BiShow
+                                                            : BiHide
+                                                    }
+                                                />
+                                            </InputRightElement>
+                                        </InputGroup>
                                         <FormErrorMessage color={"danger"}>
-                                            {form.errors.message}
+                                            {form.errors.password}
                                         </FormErrorMessage>
                                     </FormControl>
                                 )}
                             </Field>
+
+                            {/* role */}
+
+                            <FormControl mb={6}>
+                                <FormLabel
+                                    fontWeight={"medium"}
+                                    fontSize={"lg"}
+                                    htmlFor="name"
+                                >
+                                    Role{" "}
+                                    <span
+                                        style={{
+                                            color: "var(--chakra-colors-danger)",
+                                        }}
+                                    >
+                                        *
+                                    </span>
+                                </FormLabel>
+                                <RadioGroup
+                                    fontSize={"lg"}
+                                    __css={{
+                                        "& label": {
+                                            cursor: "pointer",
+                                            marginRight: "1rem",
+                                            "& input[type=radio]": {
+                                                transform: "scale(1.5)",
+                                                marginRight: "0.5rem",
+                                                marginLeft: "0.2rem",
+                                            },
+                                        },
+                                    }}
+                                >
+                                    <HStack>
+                                        <label>
+                                            <Field
+                                                type="radio"
+                                                name="role"
+                                                value="Student"
+                                            />
+                                            Student
+                                        </label>
+                                        <label>
+                                            <Field
+                                                type="radio"
+                                                name="role"
+                                                value="Teacher"
+                                            />
+                                            Teacher
+                                        </label>
+                                    </HStack>
+                                </RadioGroup>
+                            </FormControl>
 
                             <HStack justify={"center"}>
                                 <Button
@@ -220,8 +314,26 @@ const Contact = () => {
                                     isLoading={props.isSubmitting}
                                     type="submit"
                                 >
-                                    Submit
+                                    Sign Up
                                 </Button>
+                            </HStack>
+
+                            <HStack mt={"9"}>
+                                <Text>
+                                    {" "}
+                                    {"Already have an account?"}{" "}
+                                    <Link href={"/login"}>
+                                        <span
+                                            style={{
+                                                color: "var(--chakra-colors-primary)",
+                                                fontWeight: "bold",
+                                                cursor: "pointer",
+                                            }}
+                                        >
+                                            Login
+                                        </span>
+                                    </Link>
+                                </Text>
                             </HStack>
                         </Form>
                     )}
@@ -231,4 +343,4 @@ const Contact = () => {
     );
 };
 
-export default Contact;
+export default Signup;

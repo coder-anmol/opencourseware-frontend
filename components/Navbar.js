@@ -1,137 +1,244 @@
 import {
     Box,
-    Button,
     Container,
-    Flex,
     Heading,
     List,
     ListItem,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
 } from "@chakra-ui/react";
-import { HiMenuAlt3 as MenuOpen, HiX as MenuClose } from "react-icons/hi";
-import NextLink from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Button from "./Button/index.js";
+import Link from "next/link";
 import { useRouter } from "next/router";
 
-function Navbar() {
-    const [hamburgerState, setHamburgerState] = useState(true);
+const Navbar = () => {
+    const [navbar, setNavbar] = useState(false);
     const router = useRouter();
 
+    useEffect(() => {
+        setNavbar(false);
+    }, [router.route]);
+
     return (
-        <Box
-            as="nav"
-            pos="sticky"
-            top={0}
-            left={0}
-            right={0}
-            bg={"white"}
-            shadow={"sm"}
-        >
-            <Container
-                maxW={"container.xl"}
-                display={{ lg: "flex" }}
-                justifyContent={"space-between"}
-            >
-                <Flex
-                    justify={"space-between"}
-                    align={"center"}
-                    py={4}
-                    pos={"relative"}
-                    zIndex={"20"}
-                >
-                    <Heading size={"lg"}>
-                        <NextLink href={"/"}>OpenCourseWare</NextLink>
-                    </Heading>
-
-                    {/* Hamburger Icon */}
-                    <Button
-                        onClick={() => setHamburgerState(!hamburgerState)}
-                        display={{ lg: "none" }}
-                        size={"sm"}
-                        variant={"unstyled"}
-                    >
-                        {hamburgerState ? (
-                            <MenuOpen size={32} />
-                        ) : (
-                            <MenuClose size={32} />
-                        )}
-                    </Button>
-                </Flex>
-
-                {/* list */}
+        <Box as={"nav"} pos={"fixed"} top={"2"} zIndex={"100"} width="100%">
+            <Container maxW={"container.xxl"} px={{ base: "3", lg: "4" }}>
                 <Box
-                    visibility={{
-                        base: hamburgerState ? "hidden" : "visible",
-                        lg: "visible",
-                    }}
-                    height={{
-                        base: hamburgerState ? "0" : "max-content",
-                        lg: "max-content",
-                    }}
+                    minH={"0"}
+                    background={"hsla(0,0%,100%,.8)"}
+                    rounded={"50px"}
+                    px={{ base: "8", lg: "10" }}
+                    boxShadow={"0 .3125rem .625rem 0 rgba(0,0,0,.19)"}
+                    backdropFilter={"blur(4px)"}
                 >
-                    <Box>
-                        <List
-                            display={{ base: "flex" }}
-                            flexDir={{ base: "column", lg: "row" }}
+                    <Box
+                        display={{ lg: "flex" }}
+                        justifyContent={{ lg: "space-between" }}
+                    >
+                        {/* navbar left */}
+                        <Box
+                            display={"flex"}
+                            justifyContent={"space-between"}
                             alignItems={"center"}
-                            py={{ base: 10, lg: 4 }}
-                            fontSize={"xl"}
-                            gap={"10"}
+                            // px={"3"}
+                            py={"3"}
                         >
-                            <ListItem
-                                fontWeight={"semibold"}
-                                position={"relative"}
-                                _after={{
-                                    content: '""',
-                                    height: "2px",
-                                    bg: "black",
-                                    position: "absolute",
-                                    left: "0",
-                                    right: "0",
-                                    bottom: "-2px",
-                                    transition: "all 0.3s ease-in-out 0s",
-                                    ...(router.pathname == "/"
-                                        ? {
-                                              visibility: { lg: "visible" },
-                                              transform: "scaleX(1)",
-                                          }
-                                        : {
-                                              visibility: { lg: "hidden" },
-                                              transform: "scaleX(0)",
-                                          }),
+                            {/* logo */}
+                            <Link href={"/"}>
+                                <Box
+                                    display={{ lg: "flex" }}
+                                    alignItems={{ lg: "center" }}
+                                    gap={{ lg: "3" }}
+                                    cursor={"pointer"}
+                                >
+                                    <Box w={"45px"} h={"45px"} pos={"relative"}>
+                                        <Image
+                                            alt="Open Course Ware logo"
+                                            src={"/logo.png"}
+                                            layout={"fill"}
+                                            objectFit="cover"
+                                        />
+                                    </Box>
+                                    <Heading
+                                        display={{ base: "none", lg: "block" }}
+                                        fontSize={"3xl"}
+                                    >
+                                        OpenCourseWare
+                                    </Heading>
+                                </Box>
+                            </Link>
+
+                            {/* hamburger */}
+                            <Box
+                                width={"1.5em"}
+                                height={"1.5em"}
+                                cursor={"pointer"}
+                                display={{ base: "flex", lg: "none" }}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                __css={{
+                                    "& > span > span": {
+                                        display: "block",
+                                        position: "relative",
+                                        width: "24px",
+                                        height: "1px",
+                                        borderRadius: "2px",
+                                        bg: "black",
+                                        transition: "all 0.35s",
+                                        margin: "0 auto",
+                                    },
                                 }}
-                                _hover={{
-                                    _after: {
-                                        visibility: "visible",
-                                        transform: "scaleX(1)",
+                                onClick={() => setNavbar(!navbar)}
+                            >
+                                <Box as={"span"}>
+                                    <Box
+                                        as={"span"}
+                                        top={"0"}
+                                        style={
+                                            navbar
+                                                ? {
+                                                      transform:
+                                                          "rotate(45deg) translate(7px, 7px)",
+                                                  }
+                                                : {}
+                                        }
+                                    ></Box>
+                                    <Box
+                                        as={"span"}
+                                        margin={"9px auto !important"}
+                                        style={
+                                            navbar
+                                                ? {
+                                                      opacity: "0",
+                                                  }
+                                                : {}
+                                        }
+                                    ></Box>
+                                    <Box
+                                        as={"span"}
+                                        bottom={"0"}
+                                        style={
+                                            navbar
+                                                ? {
+                                                      transform:
+                                                          "rotate(-45deg) translate(7px, -7px)",
+                                                  }
+                                                : {}
+                                        }
+                                    ></Box>
+                                </Box>
+                            </Box>
+                        </Box>
+
+                        {/* navbar right */}
+                        <Box
+                            fontSize={"1.3rem"}
+                            overflow={{ base: "hidden", lg: "visible" }}
+                            transition={"max-height 0.35s ease-in-out"}
+                            maxHeight={{
+                                base: !navbar ? "0" : "100vh",
+                                lg: "max-content",
+                            }}
+                            display={{ lg: "flex" }}
+                        >
+                            <List
+                                padding={{ base: "40px", lg: 0 }}
+                                py={{ lg: "3" }}
+                                display={"flex"}
+                                flexDir={{ base: "column", lg: "row" }}
+                                alignItems={"center"}
+                                gap={{ base: "2rem", lg: "16" }}
+                                fontWeight={"bold"}
+                                __css={{
+                                    "& li": {
+                                        cursor: "pointer",
                                     },
                                 }}
                             >
-                                <NextLink href={"/"}>Home</NextLink>
-                            </ListItem>
-                            <ListItem fontWeight={"semibold"}>
-                                <NextLink href={"/about"}>About</NextLink>
-                            </ListItem>
-                            <ListItem fontWeight={"semibold"}>
-                                <NextLink href={"/contact"}>Contact</NextLink>
-                            </ListItem>
+                                <Link href={"/"}>
+                                    <ListItem>Home</ListItem>
+                                </Link>
+                                <Link href={"/courses"}>
+                                    <ListItem>Courses</ListItem>
+                                </Link>
+                                <Link href={"/contact"}>
+                                    <ListItem>Contact</ListItem>
+                                </Link>
+                                <Link href={"/login"}>
+                                    <ListItem>
+                                        <Button>Login</Button>
+                                    </ListItem>
+                                </Link>
 
-                            <ListItem>
-                                <NextLink href={"/login"}>
-                                    <Button
-                                        colorScheme={"blue"}
-                                        variant={"solid"}
-                                        size={"lg"}
-                                    >
-                                        Login / Register
-                                    </Button>
-                                </NextLink>
-                            </ListItem>
-                        </List>
+                                {/* Profile */}
+                                <ListItem>
+                                    <Menu>
+                                        <MenuButton>
+                                            <Profile />
+                                        </MenuButton>
+                                        <MenuList
+                                            mt={2}
+                                            rounded={"xl"}
+                                            shadow={"xl"}
+                                        >
+                                            <Link href={"/dashboard"}>
+                                                <a>
+                                                    <MenuItem>
+                                                        Dashboard
+                                                    </MenuItem>
+                                                </a>
+                                            </Link>
+                                            <Link href={"/admin"}>
+                                                <a>
+                                                    <MenuItem>Admin</MenuItem>
+                                                </a>
+                                            </Link>
+                                            <Link href={"/profile"}>
+                                                <a>
+                                                    <MenuItem>Profile</MenuItem>
+                                                </a>
+                                            </Link>
+                                            <Link href={"/"}>
+                                                <a>
+                                                    <MenuItem>Logout</MenuItem>
+                                                </a>
+                                            </Link>
+                                        </MenuList>
+                                    </Menu>
+                                </ListItem>
+                            </List>
+                        </Box>
                     </Box>
                 </Box>
             </Container>
         </Box>
     );
-}
+};
+
+const Profile = () => {
+    return (
+        <Box
+            w={"45px"}
+            h={"45px"}
+            pos={"relative"}
+            __css={{
+                "& img": {
+                    rounded: "full",
+                },
+            }}
+            mb={-2}
+        >
+            <Image
+                alt="Open Course Ware logo"
+                src={"/default-profile.png"}
+                layout={"fill"}
+                objectFit="cover"
+            />
+        </Box>
+    );
+};
 
 export default Navbar;

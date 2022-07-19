@@ -1,10 +1,10 @@
-import Navbar from "components/Navbar";
-import Footer from "../components/Footer";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 function DefaultLayout({ children }) {
     return (
         <>
-            <Navbar />
+            <Header />
             {children}
             <Footer />
         </>
