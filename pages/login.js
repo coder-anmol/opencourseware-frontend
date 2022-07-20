@@ -18,9 +18,18 @@ import Button from "@/components/Button";
 import { BiShow, BiHide } from "react-icons/bi";
 import { useState } from "react";
 import Link from "next/link";
+import Axios from "utils/fetcher";
+import swal from "@sweetalert/with-react";
+import { useRouter } from "next/router";
+import useStore from "store";
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
+    const setUser = useStore((state) => state.setUser);
+    const user = useStore((state) => state.user);
+
+    console.log(user);
 
     const initialFields = {
         email: "",
@@ -60,6 +69,39 @@ const Login = () => {
         return error;
     };
 
+    const loginUser = (values, actions) => {
+        const data = {
+            email: values.email,
+            password: values.password,
+        };
+
+        Axios.post("auth/signin", data)
+            .then((res) => {
+                // call alert
+                swal({
+                    title: "Logged in",
+                    icon: "success",
+                    text: "You have been logged in",
+                    type: "success",
+                });
+
+                // add token to state
+                setUser(res.data);
+
+                // change route
+                router.push("/");
+            })
+            .catch((err) => {
+                // call toast
+                swal({
+                    icon: "error",
+                    title: "Invalid Credentials",
+                    text: "Email or Password is invalid",
+                });
+                actions.setSubmitting(false);
+            });
+    };
+
     return (
         <Container maxW={"container.sm"}>
             <Box
@@ -73,12 +115,7 @@ const Login = () => {
                 <Formik
                     initialValues={initialFields}
                     onSubmit={(values, actions) => {
-                        console.log("submitted");
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            actions.setSubmitting(false);
-                            actions.resetForm(initialFields);
-                        }, 1000);
+                        loginUser(values, actions);
                     }}
                 >
                     {(props) => (
