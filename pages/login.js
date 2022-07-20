@@ -27,9 +27,8 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const router = useRouter();
     const setUser = useStore((state) => state.setUser);
-    const user = useStore((state) => state.user);
-
-    console.log(user);
+    const userData = useStore((state) => state.userData);
+    const setUserData = useStore((state) => state.setUserData);
 
     const initialFields = {
         email: "",
@@ -90,9 +89,15 @@ const Login = () => {
 
                 // change route
                 router.push("/");
+
+                // fetching user data
+                Axios.get("users/current-user").then((res) => {
+                    setUserData(res.data);
+                });
             })
             .catch((err) => {
                 // call toast
+                console.log(err);
                 swal({
                     icon: "error",
                     title: "Invalid Credentials",

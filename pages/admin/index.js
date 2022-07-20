@@ -2,9 +2,17 @@ import ModalDefault from "@/components/Modal";
 import TableDemo from "@/components/TableDemo";
 import { Box, Button, useDisclosure, Text } from "@chakra-ui/react";
 import swal from "@sweetalert/with-react";
+import Axios from "utils/fetcher";
+import { useEffect } from "react";
 
 const Index = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    useEffect(() => {
+        Axios.get("users/")
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+    }, []);
 
     function action() {
         console.log("some action");
@@ -57,6 +65,8 @@ const Index = () => {
                     Sweet Alert
                 </Button>
             </Box>
+
+            <Box my={4}></Box>
         </Box>
     );
 };

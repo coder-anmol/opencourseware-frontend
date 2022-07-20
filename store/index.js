@@ -31,7 +31,7 @@ const checkRole = (user, role) => {
 const useStore = create((set) => ({
     // initially get user auth info from local storage
     user: getUserFromLocalStorage(),
-    userData: {},
+    userData: null,
 
     setUser: (user) => {
         // set user in local storage

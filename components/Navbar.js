@@ -8,6 +8,7 @@ import {
     MenuButton,
     MenuItem,
     MenuList,
+    Avatar,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -22,6 +23,7 @@ const Navbar = () => {
     const [isSSR, setIsSSR] = useState(true);
     const router = useRouter();
     const user = useStore((state) => state.user);
+    const userData = useStore((state) => state.userData);
     const logout = useStore((state) => state.logoutUser);
 
     useEffect(() => {
@@ -188,7 +190,21 @@ const Navbar = () => {
                                     <ListItem>
                                         <Menu>
                                             <MenuButton>
-                                                <Profile />
+                                                {userData && (
+                                                    <Profile
+                                                        url={
+                                                            userData.profile_image
+                                                        }
+                                                        name={userData.name}
+                                                    />
+                                                )}
+                                                {!userData && (
+                                                    <Profile
+                                                        url={
+                                                            "/default-profile.png"
+                                                        }
+                                                    />
+                                                )}
                                             </MenuButton>
                                             <MenuList
                                                 mt={2}
@@ -216,6 +232,11 @@ const Navbar = () => {
                                                         </MenuItem>
                                                     </a>
                                                 </Link>
+                                                {userData && (
+                                                    <MenuItem>
+                                                        {userData.name}
+                                                    </MenuItem>
+                                                )}
                                                 <MenuItem
                                                     onClick={() => {
                                                         logout();
@@ -243,7 +264,7 @@ const Navbar = () => {
     );
 };
 
-const Profile = () => {
+const Profile = ({ url, name }) => {
     return (
         <Box
             w={"45px"}
@@ -254,14 +275,8 @@ const Profile = () => {
                     rounded: "full",
                 },
             }}
-            mb={-2}
         >
-            <Image
-                alt="Open Course Ware logo"
-                src={"/default-profile.png"}
-                layout={"fill"}
-                objectFit="cover"
-            />
+            <Avatar name={name} src={url} cursor={"pointer"} />
         </Box>
     );
 };
