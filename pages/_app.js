@@ -6,6 +6,10 @@ import AdminLayout from "layouts/admin";
 import WatchCourseLayout from "layouts/watchCourse";
 import Theme from "../theme";
 import ProgressBar from "nextjs-progressbar";
+import { useEffect } from "react";
+import useStore from "store";
+import Axios from "utils/fetcher";
+import swal from "@sweetalert/with-react";
 
 // ? Register New Layouts Here
 const layouts = {
@@ -18,6 +22,37 @@ const layouts = {
 function MyApp({ Component, pageProps }) {
     const layoutName = Component.layout || "default";
     const Layout = layouts[layoutName];
+    const user = useStore((state) => state.user);
+    const setUserData = useStore((state) => state.setUserData);
+    const setUser = useStore((state) => state.setUser);
+
+    useEffect(() => {
+        // refresh access token
+        if (user) {
+            Axios.post("auth/refresh/", {
+                refresh: user.refresh,
+            })
+                .then((res) => {
+                    setUser({
+                        access: res.data.access,
+                        refresh: user.refresh,
+                    });
+
+                    // fetching user data
+                    Axios.get("users/current-user").then((res) => {
+                        setUserData(res.data);
+                    });
+                })
+                .catch((err) => {
+                    setUser(null);
+                    swal({
+                        icon: "error",
+                        title: "Invalid Token",
+                        text: "Your auth token is expired or invalid, Please Login Again",
+                    });
+                });
+        }
+    }, []);
 
     return (
         <ChakraProvider theme={Theme}>

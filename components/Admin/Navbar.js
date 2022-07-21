@@ -9,8 +9,11 @@ import {
 } from "@chakra-ui/react";
 import { HiMenu } from "react-icons/hi";
 import Link from "next/link";
+import useStore from "store";
 
 const AdminNavbar = ({ onOpen }) => {
+    const userData = useStore((state) => state.userData);
+
     return (
         <HStack
             h={"76px"}
@@ -40,8 +43,8 @@ const AdminNavbar = ({ onOpen }) => {
                     as={IconButton}
                     icon={
                         <Avatar
-                            name="Ryan Florence"
-                            src="https://bit.ly/ryan-florence"
+                            name={userData.name}
+                            src={userData.profile_image}
                             cursor={"pointer"}
                         />
                     }
@@ -59,6 +62,11 @@ const AdminNavbar = ({ onOpen }) => {
                     <Link href={"/profile"}>
                         <a>
                             <MenuItem>Profile</MenuItem>
+                        </a>
+                    </Link>
+                    <Link href={"/"}>
+                        <a>
+                            <MenuItem>Main Site</MenuItem>
                         </a>
                     </Link>
                     <Link href={"/"}>

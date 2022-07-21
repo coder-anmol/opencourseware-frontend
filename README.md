@@ -36,8 +36,8 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Webhook Added
 
 ## Todo
-* [x] Modal
-* [] table
-* [] forms
+* [] Loader for layouts and components
+* [] Edit profile pages and components
+* [] Admin user model CRUD
 
 

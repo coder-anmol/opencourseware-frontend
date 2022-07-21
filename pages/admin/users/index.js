@@ -1,5 +1,11 @@
+import AdminWrapper from "@/components/Admin/AdminWrapper";
+
 const index = () => {
-    return <div>index</div>;
+    return (
+        <AdminWrapper show={true}>
+            <div>Index</div>
+        </AdminWrapper>
+    );
 };
 
 index.layout = "admin";

@@ -8,16 +8,27 @@ import {
     MenuButton,
     MenuItem,
     MenuList,
+    Avatar,
 } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Button from "./Button/index.js";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import useStore from "store";
+import swal from "@sweetalert/with-react";
 
 const Navbar = () => {
     const [navbar, setNavbar] = useState(false);
+    const [isSSR, setIsSSR] = useState(true);
     const router = useRouter();
+    const user = useStore((state) => state.user);
+    const userData = useStore((state) => state.userData);
+    const logout = useStore((state) => state.logoutUser);
+
+    useEffect(() => {
+        setIsSSR(false);
+    }, []);
 
     useEffect(() => {
         setNavbar(false);
@@ -167,48 +178,78 @@ const Navbar = () => {
                                 <Link href={"/contact"}>
                                     <ListItem>Contact</ListItem>
                                 </Link>
-                                <Link href={"/login"}>
-                                    <ListItem>
-                                        <Button>Login</Button>
-                                    </ListItem>
-                                </Link>
-
+                                {!isSSR && !user && (
+                                    <Link href={"/login"}>
+                                        <ListItem>
+                                            <Button>Login</Button>
+                                        </ListItem>
+                                    </Link>
+                                )}
                                 {/* Profile */}
-                                <ListItem>
-                                    <Menu>
-                                        <MenuButton>
-                                            <Profile />
-                                        </MenuButton>
-                                        <MenuList
-                                            mt={2}
-                                            rounded={"xl"}
-                                            shadow={"xl"}
-                                        >
-                                            <Link href={"/dashboard"}>
-                                                <a>
-                                                    <MenuItem>
-                                                        Dashboard
-                                                    </MenuItem>
-                                                </a>
-                                            </Link>
-                                            <Link href={"/admin"}>
-                                                <a>
-                                                    <MenuItem>Admin</MenuItem>
-                                                </a>
-                                            </Link>
-                                            <Link href={"/profile"}>
-                                                <a>
-                                                    <MenuItem>Profile</MenuItem>
-                                                </a>
-                                            </Link>
-                                            <Link href={"/"}>
-                                                <a>
-                                                    <MenuItem>Logout</MenuItem>
-                                                </a>
-                                            </Link>
-                                        </MenuList>
-                                    </Menu>
-                                </ListItem>
+                                {!isSSR && user && (
+                                    <ListItem>
+                                        <Menu>
+                                            <MenuButton>
+                                                {userData && (
+                                                    <Profile
+                                                        url={
+                                                            userData.profile_image
+                                                        }
+                                                        name={userData.name}
+                                                    />
+                                                )}
+                                                {!userData && (
+                                                    <Profile
+                                                        url={
+                                                            "/default-profile.png"
+                                                        }
+                                                    />
+                                                )}
+                                            </MenuButton>
+                                            <MenuList
+                                                mt={2}
+                                                rounded={"xl"}
+                                                shadow={"xl"}
+                                            >
+                                                <Link href={"/dashboard"}>
+                                                    <a>
+                                                        <MenuItem>
+                                                            Dashboard
+                                                        </MenuItem>
+                                                    </a>
+                                                </Link>
+                                                <Link href={"/admin"}>
+                                                    <a>
+                                                        <MenuItem>
+                                                            Admin
+                                                        </MenuItem>
+                                                    </a>
+                                                </Link>
+                                                <Link href={"/profile"}>
+                                                    <a>
+                                                        <MenuItem>
+                                                            Profile
+                                                        </MenuItem>
+                                                    </a>
+                                                </Link>
+                                                <MenuItem
+                                                    onClick={() => {
+                                                        logout();
+                                                        swal({
+                                                            title: "Logged Out",
+                                                            icon: "success",
+                                                            text: "You have been logged out",
+                                                            type: "success",
+                                                        });
+                                                        setNavbar(false);
+                                                    }}
+                                                >
+                                                    Logout
+                                                </MenuItem>
+                                            </MenuList>
+                                        </Menu>
+                                    </ListItem>
+                                )}
                             </List>
                         </Box>
                     </Box>
@@ -218,7 +259,7 @@ const Navbar = () => {
     );
 };
 
-const Profile = () => {
+const Profile = ({ url, name }) => {
     return (
         <Box
             w={"45px"}
@@ -229,14 +270,8 @@ const Profile = () => {
                     rounded: "full",
                 },
             }}
-            mb={-2}
         >
-            <Image
-                alt="Open Course Ware logo"
-                src={"/default-profile.png"}
-                layout={"fill"}
-                objectFit="cover"
-            />
+            <Avatar name={name} src={url} cursor={"pointer"} />
         </Box>
     );
 };
