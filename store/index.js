@@ -24,8 +24,16 @@ const doesUserExists = (user) => {
     return user ? true : false;
 };
 
-const checkRole = (user, role) => {
-    return user.role == role ? true : false;
+export const checkRole = (user, role) => {
+    if (user.is_admin && role == "admin") {
+        return true;
+    } else if (user.is_student && role == "student") {
+        return true;
+    } else if (user.is_teacher && role == "teacher") {
+        return true;
+    } else {
+        return false;
+    }
 };
 
 const useStore = create((set) => ({

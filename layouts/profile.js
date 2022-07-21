@@ -1,6 +1,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Profile from "@/components/Profile";
+import { useState, useEffect } from "react";
+import useStore from "store";
+import { useRouter } from "next/router";
 
 const list = [
     {
@@ -14,11 +17,27 @@ const list = [
 ];
 
 function ProfileLayout({ children }) {
+    const [loading, setLoading] = useState(true);
+    const user = useStore((state) => state.user);
+    const router = useRouter();
+
+    useEffect(() => {
+        if (user) {
+            setLoading(false);
+        } else {
+            router.push("/login");
+        }
+    }, [user]);
+
     return (
         <>
-            <Header />
-            <Profile list={list}>{children}</Profile>
-            <Footer />
+            {!loading && (
+                <>
+                    <Header />
+                    <Profile list={list}>{children}</Profile>
+                    <Footer />
+                </>
+            )}
         </>
     );
 }
