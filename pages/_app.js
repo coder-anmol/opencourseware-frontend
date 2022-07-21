@@ -22,8 +22,6 @@ const layouts = {
 function MyApp({ Component, pageProps }) {
     const layoutName = Component.layout || "default";
     const Layout = layouts[layoutName];
-    // const userData = useStore((state) => state.userData);
-    // const setUserData = useStore((state) => state.setUserData);
     const user = useStore((state) => state.user);
     const setUserData = useStore((state) => state.setUserData);
     const setUser = useStore((state) => state.setUser);

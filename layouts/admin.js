@@ -16,10 +16,12 @@ const AdminLayout = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            if (userData && checkRole(userData, "admin")) {
-                setLoading(false);
-            } else {
-                router.push("/");
+            if (userData) {
+                if (checkRole(userData, "admin")) {
+                    setLoading(false);
+                } else {
+                    router.push("/");
+                }
             }
         } else {
             router.push("/login");

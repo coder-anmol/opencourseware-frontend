@@ -1,10 +1,13 @@
+import AdminWrapper from "@/components/Admin/AdminWrapper";
 import { Box, Heading } from "@chakra-ui/react";
 
 const Index = () => {
     return (
-        <Box>
-            <Heading>Admin Index</Heading>
-        </Box>
+        <AdminWrapper show={true}>
+            <Box>
+                <Heading>Admin Index</Heading>
+            </Box>
+        </AdminWrapper>
     );
 };
 

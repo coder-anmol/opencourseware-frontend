@@ -20,10 +20,6 @@ const removeUserInLocalStorage = () => {
     }
 };
 
-const doesUserExists = (user) => {
-    return user ? true : false;
-};
-
 export const checkRole = (user, role) => {
     if (user.is_admin && role == "admin") {
         return true;
