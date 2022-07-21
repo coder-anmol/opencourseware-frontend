@@ -232,11 +232,6 @@ const Navbar = () => {
                                                         </MenuItem>
                                                     </a>
                                                 </Link>
-                                                {userData && (
-                                                    <MenuItem>
-                                                        {userData.name}
-                                                    </MenuItem>
-                                                )}
                                                 <MenuItem
                                                     onClick={() => {
                                                         logout();

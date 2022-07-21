@@ -19,9 +19,13 @@ import Button from "@/components/Button";
 import { BiShow, BiHide } from "react-icons/bi";
 import { useState } from "react";
 import Link from "next/link";
+import Axios from "utils/fetcher";
+import swal from "@sweetalert/with-react";
+import { useRouter } from "next/router";
 
 const Signup = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter();
 
     const initialFields = {
         email: "",
@@ -77,6 +81,39 @@ const Signup = () => {
         return error;
     };
 
+    const signUpUser = (values, actions) => {
+        const data = {
+            name: values.name,
+            email: values.email,
+            password: values.password,
+            is_teacher: values.role == "Teacher" ? true : false,
+            is_student: values.role == "Student" ? true : false,
+        };
+
+        Axios.post("auth/signup", data)
+            .then((res) => {
+                swal({
+                    title: "Signup Successfull",
+                    icon: "success",
+                    text: "You signup was successfull, please login now",
+                    type: "success",
+                });
+
+                actions.resetForm(initialFields);
+
+                router.push("/login");
+            })
+            .catch((err) => {
+                swal({
+                    icon: "error",
+                    title: "Signup Failed",
+                    text: "A user with this email already exists",
+                });
+
+                actions.setSubmitting(false);
+            });
+    };
+
     return (
         <Container maxW={"container.sm"}>
             <Box
@@ -90,12 +127,7 @@ const Signup = () => {
                 <Formik
                     initialValues={initialFields}
                     onSubmit={(values, actions) => {
-                        console.log("submitted");
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            actions.setSubmitting(false);
-                            actions.resetForm(initialFields);
-                        }, 1000);
+                        signUpUser(values, actions);
                     }}
                 >
                     {(props) => (

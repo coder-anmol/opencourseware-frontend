@@ -97,7 +97,6 @@ const Login = () => {
             })
             .catch((err) => {
                 // call toast
-                console.log(err);
                 swal({
                     icon: "error",
                     title: "Invalid Credentials",
