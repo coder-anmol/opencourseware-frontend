@@ -9,7 +9,7 @@ import {
     Container,
     HStack,
 } from "@chakra-ui/react";
-import { FaGithub, FaYoutube, FaInstagram } from "react-icons/fa";
+import { FaGithub, FaYoutube, FaInstagram, FaEnvelope } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -20,6 +20,7 @@ function Footer() {
             borderTop={"1px solid"}
             borderColor={"gray.200"}
             pt={"10"}
+            bg={"white"}
         >
             <Container maxW={"container.xxl"}>
                 <Stack>
@@ -70,6 +71,18 @@ function Footer() {
                                         />
                                     </a>
                                     <a
+                                        href={
+                                            "mailto:dev.anmolsharma@gmail.com"
+                                        }
+                                        rel={"noreferrer"}
+                                    >
+                                        <IconButton
+                                            icon={<FaEnvelope />}
+                                            color="gray.600"
+                                            size={"md"}
+                                        />
+                                    </a>
+                                    {/* <a
                                         href={"https://github.com/coder-anmol"}
                                         target={"_blank"}
                                         rel={"noreferrer"}
@@ -79,8 +92,8 @@ function Footer() {
                                             color="gray.600"
                                             size={"md"}
                                         />
-                                    </a>
-                                    <a
+                                    </a> */}
+                                    {/* <a
                                         href={"https://github.com/coder-anmol"}
                                         target={"_blank"}
                                         rel={"noreferrer"}
@@ -90,7 +103,7 @@ function Footer() {
                                             color="gray.600"
                                             size={"md"}
                                         />
-                                    </a>
+                                    </a> */}
                                 </HStack>
                             </Box>
                         </Box>
@@ -121,14 +134,11 @@ function Footer() {
                                         Resources
                                     </Heading>
                                     <List>
-                                        <Link href={"/login"}>
-                                            <ListItem>Home</ListItem>
+                                        <Link href={"/courses"}>
+                                            <ListItem>Courses</ListItem>
                                         </Link>
-                                        <Link href={"/login"}>
-                                            <ListItem>Home</ListItem>
-                                        </Link>
-                                        <Link href={"/login"}>
-                                            <ListItem>Home</ListItem>
+                                        <Link href={"/contact"}>
+                                            <ListItem>Contact</ListItem>
                                         </Link>
                                     </List>
                                 </Box>
@@ -143,31 +153,37 @@ function Footer() {
                                         Links
                                     </Heading>
                                     <List>
-                                        <Link href={"/login"}>
+                                        <Link href={"/"}>
                                             <ListItem>Home</ListItem>
                                         </Link>
-                                        <Link href={"/login"}>
-                                            <ListItem>Home</ListItem>
+                                        <Link href={"/signup"}>
+                                            <ListItem>Signup</ListItem>
                                         </Link>
                                         <Link href={"/login"}>
-                                            <ListItem>Home</ListItem>
+                                            <ListItem>Login</ListItem>
                                         </Link>
                                     </List>
                                 </Box>
                             </HStack>
                         </Box>
                     </Box>
-
-                    {/* Bottom */}
-                    <HStack justify={"center"} py={"6"}>
-                        <Box>
-                            <Text as="h5" fontSize={"xl"} color={"gray.800"}>
-                                &copy; {new Date().getFullYear()} OpenCourseWare
-                            </Text>
-                        </Box>
-                    </HStack>
                 </Stack>
             </Container>
+
+            {/* Bottom */}
+            <HStack
+                justify={"center"}
+                py={"6"}
+                borderTop={"1px"}
+                borderColor={"gray.100"}
+                mt={6}
+            >
+                <Box>
+                    <Text as="h5" fontSize={"xl"} color={"gray.800"}>
+                        &copy; {new Date().getFullYear()} OpenCourseWare
+                    </Text>
+                </Box>
+            </HStack>
         </Box>
     );
 }

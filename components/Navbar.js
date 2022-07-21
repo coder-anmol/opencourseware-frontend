@@ -161,7 +161,7 @@ const Navbar = () => {
                                 display={"flex"}
                                 flexDir={{ base: "column", lg: "row" }}
                                 alignItems={"center"}
-                                gap={{ base: "2rem", lg: "16" }}
+                                gap={{ base: "2rem", lg: "12" }}
                                 fontWeight={"bold"}
                                 __css={{
                                     "& li": {
@@ -211,20 +211,19 @@ const Navbar = () => {
                                                 rounded={"xl"}
                                                 shadow={"xl"}
                                             >
-                                                <Link href={"/dashboard"}>
-                                                    <a>
-                                                        <MenuItem>
-                                                            Dashboard
-                                                        </MenuItem>
-                                                    </a>
-                                                </Link>
-                                                <Link href={"/admin"}>
-                                                    <a>
-                                                        <MenuItem>
-                                                            Admin
-                                                        </MenuItem>
-                                                    </a>
-                                                </Link>
+                                                {userData &&
+                                                    !userData.is_admin && (
+                                                        <Link
+                                                            href={"/dashboard"}
+                                                        >
+                                                            <a>
+                                                                <MenuItem>
+                                                                    Dashboard
+                                                                </MenuItem>
+                                                            </a>
+                                                        </Link>
+                                                    )}
+
                                                 <Link href={"/profile"}>
                                                     <a>
                                                         <MenuItem>
@@ -232,6 +231,16 @@ const Navbar = () => {
                                                         </MenuItem>
                                                     </a>
                                                 </Link>
+
+                                                {userData && userData.is_admin && (
+                                                    <Link href={"/admin"}>
+                                                        <a>
+                                                            <MenuItem>
+                                                                Admin
+                                                            </MenuItem>
+                                                        </a>
+                                                    </Link>
+                                                )}
                                                 <MenuItem
                                                     onClick={() => {
                                                         logout();
