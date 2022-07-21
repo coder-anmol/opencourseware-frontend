@@ -10,9 +10,11 @@ import {
 import { HiMenu } from "react-icons/hi";
 import Link from "next/link";
 import useStore from "store";
+import swal from "@sweetalert/with-react";
 
 const AdminNavbar = ({ onOpen }) => {
     const userData = useStore((state) => state.userData);
+    const logout = useStore((state) => state.logoutUser);
 
     return (
         <HStack
@@ -54,9 +56,9 @@ const AdminNavbar = ({ onOpen }) => {
                     alignItems={"center"}
                 />
                 <MenuList>
-                    <Link href={"/dashboard"}>
+                    <Link href={"/"}>
                         <a>
-                            <MenuItem>Dashboard</MenuItem>
+                            <MenuItem>Main Site</MenuItem>
                         </a>
                     </Link>
                     <Link href={"/profile"}>
@@ -64,16 +66,19 @@ const AdminNavbar = ({ onOpen }) => {
                             <MenuItem>Profile</MenuItem>
                         </a>
                     </Link>
-                    <Link href={"/"}>
-                        <a>
-                            <MenuItem>Main Site</MenuItem>
-                        </a>
-                    </Link>
-                    <Link href={"/"}>
-                        <a>
-                            <MenuItem>Logout</MenuItem>
-                        </a>
-                    </Link>
+                    <MenuItem
+                        onClick={() => {
+                            logout();
+                            swal({
+                                title: "Logged Out",
+                                icon: "success",
+                                text: "You have been logged out",
+                                type: "success",
+                            });
+                        }}
+                    >
+                        Logout
+                    </MenuItem>
                 </MenuList>
             </Menu>
         </HStack>

@@ -51,7 +51,7 @@ const TeacherProfile = () => {
                             {/* name, subject */}
                             <Box>
                                 <Heading mt={{ base: "5", md: 0 }} size={"lg"}>
-                                    Hardeep Kumar
+                                    John Doe
                                 </Heading>
                                 <Text fontSize={{ base: "lg" }}>
                                     Teaches Django And API Development

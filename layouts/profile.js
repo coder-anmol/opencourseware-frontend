@@ -10,24 +10,27 @@ const list = [
         name: "Edit",
         href: "/profile",
     },
-    {
-        name: "Settings",
-        href: "/profile/settings",
-    },
+    // {
+    //     name: "Settings",
+    //     href: "/profile/settings",
+    // },
 ];
 
 function ProfileLayout({ children }) {
     const [loading, setLoading] = useState(true);
     const user = useStore((state) => state.user);
+    const userData = useStore((state) => state.userData);
     const router = useRouter();
 
     useEffect(() => {
         if (user) {
-            setLoading(false);
+            if (userData) {
+                setLoading(false);
+            }
         } else {
             router.push("/login");
         }
-    }, [user]);
+    }, [user, userData]);
 
     return (
         <>
