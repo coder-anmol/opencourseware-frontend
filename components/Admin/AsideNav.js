@@ -17,23 +17,18 @@ import Link from "next/link";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useRef } from "react";
+import { HiHome, HiLibrary, HiUsers } from "react-icons/hi";
 
 const routesList = [
     {
         name: "Users",
         link: "/admin/users",
+        icon: HiUsers,
     },
     {
         name: "Courses",
         link: "/admin/courses",
-    },
-    {
-        name: "Contact",
-        link: "/admin/contact",
-    },
-    {
-        name: "Review",
-        link: "/admin/review",
+        icon: HiLibrary,
     },
 ];
 
@@ -106,7 +101,7 @@ const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
                                 shadow: "lg",
                             })}
                         >
-                            <ListIcon as={MdCheckCircle} />
+                            <ListIcon as={HiHome} />
                             Home
                         </ListItem>
                     </Link>
@@ -122,7 +117,7 @@ const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
                                         shadow: "lg",
                                     })}
                                 >
-                                    <ListIcon as={MdCheckCircle} />
+                                    <ListIcon as={item.icon} />
                                     {item.name}
                                 </ListItem>
                             </Link>

@@ -5,8 +5,11 @@ import {
     HiOutlineChevronDoubleRight as Last,
 } from "react-icons/hi";
 import { HStack, Button, IconButton } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
-const Pagination = () => {
+const Pagination = ({ count, current, next, previous }) => {
+    const router = useRouter();
+
     return (
         <HStack justify={"center"}>
             <HStack>
@@ -16,6 +19,10 @@ const Pagination = () => {
                     icon={<First />}
                     cursor={"pointer"}
                     shadow={"sm"}
+                    onClick={() => {
+                        router.push("/admin/users?page=1");
+                    }}
+                    disabled={!previous}
                 />
                 <IconButton
                     rounded={"full"}
@@ -23,14 +30,19 @@ const Pagination = () => {
                     icon={<Back />}
                     cursor={"pointer"}
                     shadow={"sm"}
+                    onClick={() => {
+                        router.push(`/admin/users?page=${current - 1}`);
+                    }}
+                    disabled={!previous}
                 />
+
                 <Button
                     variant={"unstyled"}
                     rounded={"lg"}
                     bg={"gray.100"}
                     px={"4 !important"}
                 >
-                    1 of 10
+                    {current} of {count}
                 </Button>
                 <IconButton
                     rounded={"full"}
@@ -38,13 +50,22 @@ const Pagination = () => {
                     icon={<Forward />}
                     cursor={"pointer"}
                     shadow={"sm"}
+                    onClick={() => {
+                        router.push(`/admin/users?page=${current + 1}`);
+                    }}
+                    disabled={!next}
                 />
+
                 <IconButton
                     rounded={"full"}
                     aria-label="Search database"
                     icon={<Last />}
                     cursor={"pointer"}
                     shadow={"sm"}
+                    onClick={() => {
+                        router.push(`/admin/users?page=${count}`);
+                    }}
+                    disabled={!next}
                 />
             </HStack>
         </HStack>
