@@ -1,8 +1,6 @@
 import {
     Box,
     Button,
-    useDisclosure,
-    Text,
     Table,
     Thead,
     Tbody,
@@ -14,6 +12,7 @@ import {
     Icon,
     Avatar,
     AspectRatio,
+    HStack,
 } from "@chakra-ui/react";
 import Axios from "utils/fetcher";
 import { useEffect, useState } from "react";
@@ -25,8 +24,8 @@ import swal from "@sweetalert/with-react";
 import Link from "next/link";
 import { formatDate, formatRole } from "utils/tools";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import EmptyData from "@/components/EmptyData";
+import MyButton from "@/components/Button";
 
 const Index = () => {
     const [loading, setLoading] = useState(true);
@@ -87,12 +86,11 @@ const Index = () => {
             <AdminWrapper show={!loading}>
                 <Box>
                     {/* Table Heading */}
-                    <Heading size={"xl"} mb={"4"}>
-                        Users
-                    </Heading>
-
-                    {/* empty data */}
-                    <EmptyData show={!users.length} />
+                    <Box>
+                        <Heading size={"xl"} mb={"4"}>
+                            Users
+                        </Heading>
+                    </Box>
 
                     {/* Table Data */}
                     {!!users.length && (
@@ -189,6 +187,16 @@ const Index = () => {
                             </Box>
                         </TableContainer>
                     )}
+
+                    {/* empty data */}
+                    <EmptyData show={!users.length} />
+
+                    {/* Add User */}
+                    <HStack justify={"end"} my={4}>
+                        <Link href={"/admin/users/add"}>
+                            <MyButton>Add User</MyButton>
+                        </Link>
+                    </HStack>
                 </Box>
             </AdminWrapper>
         </>
