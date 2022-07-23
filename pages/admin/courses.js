@@ -5,7 +5,7 @@ const Index = () => {
     return (
         <AdminWrapper show={true}>
             <Box>
-                <Heading>Admin Index</Heading>
+                <Heading>Courses</Heading>
             </Box>
         </AdminWrapper>
     );

@@ -287,13 +287,13 @@ const EditId = () => {
                 <Formik
                     initialValues={initialFields}
                     onSubmit={(values, actions) => {
-                        updateProfile(values, actions);
+                        router.push(`/admin/users/edit/${initialFields.id}`);
                     }}
                 >
                     {(props) => (
                         <Form id="edit-profile">
                             <Heading fontSize={"3xl"} mb={6}>
-                                Edit Profile
+                                Profile Preview
                             </Heading>
 
                             {/* Profile Image */}
@@ -306,36 +306,7 @@ const EditId = () => {
                                     src={image.url}
                                     size={"2xl"}
                                     shadow={"xl"}
-                                >
-                                    <AvatarBadge
-                                        borderColor="papayawhip"
-                                        bg="danger"
-                                        boxSize="0.8em"
-                                        border={"4px"}
-                                        right={2}
-                                        bottom={2}
-                                        cursor={"pointer"}
-                                        onClick={editProfileHandler}
-                                    >
-                                        <Icon
-                                            as={FaPen}
-                                            fontSize={"1rem"}
-                                            color={"white"}
-                                        />
-                                    </AvatarBadge>
-                                </Avatar>
-                                {/* file upload field */}
-                                <Box>
-                                    <Input
-                                        ref={fileInput}
-                                        type={"file"}
-                                        display={"none"}
-                                        accept="image/jpeg,image/jpg,image/png"
-                                        onChange={(e) => {
-                                            selectFile(e);
-                                        }}
-                                    />
-                                </Box>
+                                />
                             </HStack>
 
                             {/*name */}
@@ -369,6 +340,7 @@ const EditId = () => {
                                             size={"lg"}
                                             focusBorderColor={"primary"}
                                             errorBorderColor={"danger"}
+                                            isDisabled
                                         />
                                         <FormErrorMessage color={"danger"}>
                                             {form.errors.name}
@@ -408,6 +380,7 @@ const EditId = () => {
                                             size={"lg"}
                                             focusBorderColor={"primary"}
                                             errorBorderColor={"danger"}
+                                            isDisabled
                                         />
                                         <FormErrorMessage color={"danger"}>
                                             {form.errors.email}
@@ -440,6 +413,7 @@ const EditId = () => {
                                             rows={"6"}
                                             focusBorderColor={"primary"}
                                             errorBorderColor={"danger"}
+                                            isDisabled
                                         />
                                         <FormErrorMessage color={"danger"}>
                                             {form.errors.bio}
@@ -482,25 +456,10 @@ const EditId = () => {
                                             <Field
                                                 type="radio"
                                                 name="role"
-                                                value="Student"
+                                                value={initialFields.role}
+                                                disabled
                                             />
-                                            Student
-                                        </label>
-                                        <label>
-                                            <Field
-                                                type="radio"
-                                                name="role"
-                                                value="Teacher"
-                                            />
-                                            Teacher
-                                        </label>
-                                        <label>
-                                            <Field
-                                                type="radio"
-                                                name="role"
-                                                value="Admin"
-                                            />
-                                            Admin
+                                            {initialFields.role}
                                         </label>
                                     </HStack>
                                 </RadioGroup>
@@ -512,7 +471,7 @@ const EditId = () => {
                                     isLoading={props.isSubmitting}
                                     type="submit"
                                 >
-                                    Update User
+                                    Edit User
                                 </Button>
                             </HStack>
                         </Form>
