@@ -132,11 +132,16 @@ const Index = () => {
                                                 <Td>{name}</Td>
                                                 <Td>{email}</Td>
                                                 <Td py={"3 !important"}>
-                                                    <Avatar
-                                                        name={name}
-                                                        src={profile_image}
-                                                        size={"md"}
-                                                    />
+                                                    <Link
+                                                        href={`/admin/users/preview/${id}`}
+                                                    >
+                                                        <Avatar
+                                                            name={name}
+                                                            src={profile_image}
+                                                            cursor={"pointer"}
+                                                            size={"md"}
+                                                        />
+                                                    </Link>
                                                 </Td>
                                                 <Td>
                                                     {formatRole(
