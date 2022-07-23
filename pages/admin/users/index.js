@@ -160,6 +160,11 @@ const Index = () => {
                                                             cursor={"pointer"}
                                                             color={"warning"}
                                                             as={HiPencilAlt}
+                                                            onClick={() => {
+                                                                router.push(
+                                                                    `/admin/users/edit/${id}`
+                                                                );
+                                                            }}
                                                         />
                                                         <Icon
                                                             fontSize={"2xl"}

@@ -1,4 +1,3 @@
-import AdminLoader from "@/components/Admin/AdminLoader";
 import AdminWrapper from "@/components/Admin/AdminWrapper";
 import {
     Heading,
@@ -14,12 +13,11 @@ import {
     Textarea,
     HStack,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import validator from "validator";
 import Button from "@/components/Button";
 import { BiShow, BiHide } from "react-icons/bi";
-import Link from "next/link";
 import Axios from "utils/fetcher";
 import swal from "@sweetalert/with-react";
 import { useRouter } from "next/router";
@@ -142,7 +140,7 @@ function AddUser() {
                         }}
                     >
                         {(props) => (
-                            <Form id="contact">
+                            <Form id="add-user">
                                 {/*name */}
                                 <Field name="name" validate={validateName}>
                                     {({ field, form }) => (
