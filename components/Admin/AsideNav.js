@@ -21,9 +21,9 @@ import { HiHome, HiLibrary, HiUsers, HiCube } from "react-icons/hi";
 
 const routesList = [
     {
-        name: "Users",
-        link: "/admin/users",
-        icon: HiUsers,
+        name: "Categories",
+        link: "/admin/categories",
+        icon: HiCube,
     },
     {
         name: "Courses",
@@ -31,9 +31,9 @@ const routesList = [
         icon: HiLibrary,
     },
     {
-        name: "Categories",
-        link: "/admin/categories",
-        icon: HiCube,
+        name: "Users",
+        link: "/admin/users",
+        icon: HiUsers,
     },
 ];
 
