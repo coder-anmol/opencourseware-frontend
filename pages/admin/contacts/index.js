@@ -29,26 +29,26 @@ import MyButton from "@/components/Button";
 
 const Index = () => {
     const [loading, setLoading] = useState(true);
-    const [users, setUsers] = useState([]);
+    const [contacts, setContacts] = useState([]);
     const [pagination, setPagination] = useState({});
 
     const router = useRouter();
 
-    const deleteUser = (id) => {
+    const deleteContact = (id) => {
         setLoading(true);
-        Axios.delete(`users/${id}`)
+        Axios.delete(`contact-us/${id}/`)
             .then((res) => {
                 swal({
-                    title: "User Deleted",
+                    title: "Contact Deleted",
                     icon: "success",
-                    text: "User is deleted successfully",
+                    text: "Contact is deleted successfully",
                     type: "success",
                 });
 
                 const { page = 1 } = router.query;
-                Axios.get(`users?page=${page}`).then((res) => {
+                Axios.get(`contact-us/all/?page=${page}`).then((res) => {
                     setPagination(res.data.pagination);
-                    setUsers(res.data.results);
+                    setContacts(res.data.results);
                     setLoading(false);
                 });
             })
@@ -56,7 +56,7 @@ const Index = () => {
                 swal({
                     icon: "error",
                     title: "Delete Action Failed",
-                    text: `Unable to delete user`,
+                    text: `Unable to delete contact`,
                 });
                 setLoading(false);
             });
@@ -64,10 +64,10 @@ const Index = () => {
 
     useEffect(() => {
         const { page = 1 } = router.query;
-        Axios.get(`users?page=${page}`)
+        Axios.get(`contact-us/all/?page=${page}`)
             .then((res) => {
                 setPagination(res.data.pagination);
-                setUsers(res.data.results);
+                setContacts(res.data.results);
                 setLoading(false);
             })
             .catch((err) => {
@@ -88,12 +88,12 @@ const Index = () => {
                     {/* Table Heading */}
                     <Box>
                         <Heading size={"xl"} mb={"4"}>
-                            Users
+                            Contacts
                         </Heading>
                     </Box>
 
                     {/* Table Data */}
-                    {!!users.length && (
+                    {!!contacts.length && (
                         <TableContainer
                             border={"1px"}
                             borderColor={"gray.200"}
@@ -108,51 +108,28 @@ const Index = () => {
                                         <Th>Id</Th>
                                         <Th>Name</Th>
                                         <Th>Email</Th>
-                                        <Th>Profile Image</Th>
-                                        <Th>Role</Th>
-                                        <Th>Created On</Th>
                                         <Th isNumeric>Actions</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {users.map((user) => {
-                                        const {
-                                            id,
-                                            name,
-                                            email,
-                                            profile_image,
-                                            is_admin,
-                                            is_teacher,
-                                            is_student,
-                                            created_on,
-                                        } = user;
+                                    {contacts.map((contact) => {
+                                        const { id, name, email } = contact;
                                         return (
                                             <Tr key={id}>
                                                 <Td>{id}</Td>
-                                                <Td>{name}</Td>
-                                                <Td>{email}</Td>
-                                                <Td py={"3 !important"}>
-                                                    <Link
-                                                        href={`/admin/users/preview/${id}`}
+                                                <Link
+                                                    href={`/admin/contacts/preview/${id}`}
+                                                >
+                                                    <Td
+                                                        cursor={"pointer"}
+                                                        _hover={{
+                                                            color: "primary",
+                                                        }}
                                                     >
-                                                        <Avatar
-                                                            name={name}
-                                                            src={profile_image}
-                                                            cursor={"pointer"}
-                                                            size={"md"}
-                                                        />
-                                                    </Link>
-                                                </Td>
-                                                <Td>
-                                                    {formatRole(
-                                                        is_student,
-                                                        is_teacher,
-                                                        is_admin
-                                                    )}
-                                                </Td>
-                                                <Td>
-                                                    {formatDate(created_on)}
-                                                </Td>
+                                                        {name}
+                                                    </Td>
+                                                </Link>
+                                                <Td>{email}</Td>
                                                 <Td isNumeric>
                                                     <Box
                                                         display={"flex"}
@@ -163,21 +140,12 @@ const Index = () => {
                                                         <Icon
                                                             fontSize={"2xl"}
                                                             cursor={"pointer"}
-                                                            color={"warning"}
-                                                            as={HiPencilAlt}
-                                                            onClick={() => {
-                                                                router.push(
-                                                                    `/admin/users/edit/${id}`
-                                                                );
-                                                            }}
-                                                        />
-                                                        <Icon
-                                                            fontSize={"2xl"}
-                                                            cursor={"pointer"}
                                                             color={"danger"}
                                                             as={HiTrash}
                                                             onClick={() => {
-                                                                deleteUser(id);
+                                                                deleteContact(
+                                                                    id
+                                                                );
                                                             }}
                                                         />
                                                     </Box>
@@ -193,20 +161,14 @@ const Index = () => {
                                     current={pagination.current}
                                     next={pagination.next}
                                     previous={pagination.previous}
+                                    baseUrl={"/admin/contacts"}
                                 />
                             </Box>
                         </TableContainer>
                     )}
 
                     {/* empty data */}
-                    <EmptyData show={!users.length} />
-
-                    {/* Add User */}
-                    <HStack justify={"end"} my={4}>
-                        <Link href={"/admin/users/add"}>
-                            <MyButton>Add User</MyButton>
-                        </Link>
-                    </HStack>
+                    <EmptyData show={!contacts.length} />
                 </Box>
             </AdminWrapper>
         </>

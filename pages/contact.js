@@ -12,8 +12,11 @@ import {
 import { Formik, Form, Field } from "formik";
 import validator from "validator";
 import Button from "@/components/Button";
+import Axios from "utils/fetcher";
+import { useRouter } from "next/router";
 
 const Contact = () => {
+    const router = useRouter();
     const initialFields = {
         name: "",
         email: "",
@@ -58,6 +61,32 @@ const Contact = () => {
         return error;
     };
 
+    function submitContact(values, actions) {
+        const data = {
+            name: values.name,
+            email: values.email,
+            message: values.message,
+        };
+        Axios.post("contact-us/", data)
+            .then((res) => {
+                swal({
+                    title: "Action Successfull",
+                    icon: "success",
+                    text: "Contact message is posted",
+                    type: "success",
+                });
+                router.push("/");
+            })
+            .catch((err) => {
+                swal({
+                    icon: "error",
+                    title: "Action Failed",
+                    text: "Unable to post contact message",
+                });
+                actions.setSubmitting(false);
+            });
+    }
+
     return (
         <Container maxW={"container.lg"}>
             <Box
@@ -73,12 +102,7 @@ const Contact = () => {
                 <Formik
                     initialValues={initialFields}
                     onSubmit={(values, actions) => {
-                        console.log("submitted");
-                        setTimeout(() => {
-                            alert(JSON.stringify(values, null, 2));
-                            actions.setSubmitting(false);
-                            actions.resetForm(initialFields);
-                        }, 1000);
+                        submitContact(values, actions);
                     }}
                 >
                     {(props) => (
