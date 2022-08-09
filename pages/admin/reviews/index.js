@@ -85,7 +85,6 @@ const Index = () => {
                                         <Th>Category</Th>
                                         <Th>Status</Th>
                                         <Th>Created On</Th>
-                                        <Th>Published On</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
@@ -97,7 +96,6 @@ const Index = () => {
                                             category,
                                             course_status,
                                             created_on,
-                                            published_on,
                                         } = course;
                                         return (
                                             <Tr key={id}>
@@ -144,9 +142,6 @@ const Index = () => {
                                                 <Td>
                                                     {formatDate(created_on)}
                                                 </Td>
-                                                <Td isNumeric>
-                                                    {formatDate(published_on)}
-                                                </Td>
                                             </Tr>
                                         );
                                     })}
@@ -166,13 +161,6 @@ const Index = () => {
 
                     {/* empty data */}
                     <EmptyData show={!courses.length} />
-
-                    {/* Add Course */}
-                    <HStack justify={"end"} my={4}>
-                        <Link href={"/admin/courses/add"}>
-                            <MyButton>Add Course</MyButton>
-                        </Link>
-                    </HStack>
                 </Box>
             </AdminWrapper>
         </>

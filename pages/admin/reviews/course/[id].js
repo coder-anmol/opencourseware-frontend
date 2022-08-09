@@ -27,32 +27,29 @@ import MyButton from "@/components/Button";
 
 const Index = () => {
     const [loading, setLoading] = useState(true);
+    const [pagination, setPagination] = useState({});
     const [reviews, setReviews] = useState([]);
 
     const router = useRouter();
 
     useEffect(() => {
-        Axios.get(`course-review/all/`)
-            .then((res) => {
-                console.log("Result: ", res.data);
-                // const _reviews = res.data.results;
-                // const filteredReviews = _reviews.filter(
-                //     (review) => review.course.id == router.query.id
-                // );
-                // console.log(_reviews);
-                // console.log(filteredReviews);
-                // setReviews(filteredReviews);
-                setLoading(false);
-            })
-
-            .catch((err) => {
-                swal({
-                    icon: "error",
-                    title: "Data Fetching Failed",
-                    text: "Unable to fetch user's data",
+        if (router.query.id) {
+            const { page = 1 } = router.query;
+            Axios.get(`course-review/all/${router.query.id}?page=${page}`)
+                .then((res) => {
+                    setReviews(res.data.results);
+                    setPagination(res.data.pagination);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    swal({
+                        icon: "error",
+                        title: "Data Fetching Failed",
+                        text: "Unable to fetch reviews data",
+                    });
+                    router.push("/admin/reviews");
                 });
-                router.push("/admin/courses");
-            });
+        }
     }, [router.query.page]);
 
     return (
@@ -92,17 +89,21 @@ const Index = () => {
                                         return (
                                             <Tr key={review.id}>
                                                 <Td>{review.id}</Td>
-                                                <Td
-                                                    _hover={{
-                                                        color: "primary",
-                                                        cursor: "pointer",
-                                                    }}
+                                                <Link
+                                                    href={`/admin/reviews/course/preview/${review.id}`}
                                                 >
-                                                    {formatCourseName(
-                                                        review.feedback,
-                                                        60
-                                                    )}
-                                                </Td>
+                                                    <Td
+                                                        _hover={{
+                                                            color: "primary",
+                                                            cursor: "pointer",
+                                                        }}
+                                                    >
+                                                        {formatCourseName(
+                                                            review.feedback,
+                                                            60
+                                                        )}
+                                                    </Td>
+                                                </Link>
                                                 <Td py={"3 !important"}>
                                                     <Link
                                                         href={`/admin/users/preview/${review.student[0].id}`}
@@ -124,7 +125,7 @@ const Index = () => {
                                                     </Link>
                                                 </Td>
                                                 <Td>{review.rating}</Td>
-                                                <Td isNumeric>
+                                                <Td>
                                                     {formatDate(
                                                         review.created_on
                                                     )}
@@ -134,18 +135,20 @@ const Index = () => {
                                     })}
                                 </Tbody>
                             </Table>
+                            <Box py={"3"}>
+                                <Pagination
+                                    count={pagination.count}
+                                    current={pagination.current}
+                                    next={pagination.next}
+                                    previous={pagination.previous}
+                                    baseUrl={`/admin/reviews/course/${router.query.id}`}
+                                />
+                            </Box>
                         </TableContainer>
                     )}
 
                     {/* empty data */}
                     <EmptyData show={!reviews.length} />
-
-                    {/* Add Course */}
-                    {/* <HStack justify={"end"} my={4}>
-                        <Link href={"/admin/courses/add"}>
-                            <MyButton>Add Course</MyButton>
-                        </Link>
-                    </HStack> */}
                 </Box>
             </AdminWrapper>
         </>
