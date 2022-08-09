@@ -14,7 +14,7 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { MdCheckCircle } from "react-icons/md";
+import { MdCheckCircle, MdContacts } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useRef } from "react";
 import {
@@ -30,6 +30,11 @@ const routesList = [
         name: "Categories",
         link: "/admin/categories",
         icon: HiCube,
+    },
+    {
+        name: "Contacts",
+        link: "/admin/contacts",
+        icon: MdContacts,
     },
     {
         name: "Courses",

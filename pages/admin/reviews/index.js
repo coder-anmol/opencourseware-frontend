@@ -158,6 +158,7 @@ const Index = () => {
                                     current={pagination.current}
                                     next={pagination.next}
                                     previous={pagination.previous}
+                                    baseUrl={"/admin/reviews"}
                                 />
                             </Box>
                         </TableContainer>

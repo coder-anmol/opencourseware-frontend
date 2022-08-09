@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     Table,
     Thead,
     Tbody,
@@ -10,6 +11,7 @@ import {
     Heading,
     Icon,
     Avatar,
+    AspectRatio,
     HStack,
 } from "@chakra-ui/react";
 import Axios from "utils/fetcher";
@@ -17,36 +19,36 @@ import { useEffect, useState } from "react";
 import AdminLoader from "@/components/Admin/AdminLoader";
 import AdminWrapper from "@/components/Admin/AdminWrapper";
 import Pagination from "@/components/Pagination";
-import { HiPencilAlt, HiTrash, HiCheck } from "react-icons/hi";
+import { HiPencilAlt, HiTrash } from "react-icons/hi";
 import swal from "@sweetalert/with-react";
 import Link from "next/link";
-import { formatDate, formatCourseName } from "utils/tools";
+import { formatDate, formatRole } from "utils/tools";
 import { useRouter } from "next/router";
 import EmptyData from "@/components/EmptyData";
 import MyButton from "@/components/Button";
 
 const Index = () => {
     const [loading, setLoading] = useState(true);
-    const [courses, setCourses] = useState([]);
+    const [users, setUsers] = useState([]);
     const [pagination, setPagination] = useState({});
 
     const router = useRouter();
 
-    const deleteCourse = (id) => {
+    const deleteUser = (id) => {
         setLoading(true);
-        Axios.delete(`course/${id}`)
+        Axios.delete(`users/${id}`)
             .then((res) => {
                 swal({
-                    title: "Course Deleted",
+                    title: "User Deleted",
                     icon: "success",
-                    text: "Course is deleted successfully",
+                    text: "User is deleted successfully",
                     type: "success",
                 });
 
                 const { page = 1 } = router.query;
-                Axios.get(`course/all?page=${page}`).then((res) => {
+                Axios.get(`users?page=${page}`).then((res) => {
                     setPagination(res.data.pagination);
-                    setCourses(res.data.results);
+                    setUsers(res.data.results);
                     setLoading(false);
                 });
             })
@@ -54,18 +56,18 @@ const Index = () => {
                 swal({
                     icon: "error",
                     title: "Delete Action Failed",
-                    text: `Unable to delete course`,
+                    text: `Unable to delete user`,
                 });
                 setLoading(false);
             });
     };
 
-    function fetchData() {
+    useEffect(() => {
         const { page = 1 } = router.query;
-        Axios.get(`course/all?page=${page}`)
+        Axios.get(`users?page=${page}`)
             .then((res) => {
                 setPagination(res.data.pagination);
-                setCourses(res.data.results);
+                setUsers(res.data.results);
                 setLoading(false);
             })
             .catch((err) => {
@@ -74,36 +76,8 @@ const Index = () => {
                     title: "Page Fetching Failed",
                     text: `Unable to fetch page no ${router.query.page} data`,
                 });
-                router.push("/admin/courses?page=1");
+                router.push("/admin/users?page=1");
             });
-    }
-
-    function changeCourseStatus(id) {
-        const data = {
-            course_status: "published",
-        };
-
-        Axios.patch(`course/change-status/${id}/`, data)
-            .then((res) => {
-                swal({
-                    title: "Action Successfull",
-                    icon: "success",
-                    text: "Course is published successfully",
-                    type: "success",
-                });
-            })
-            .catch((err) => {
-                swal({
-                    icon: "error",
-                    title: "Action Failed",
-                    text: "Unable to publish course",
-                    type: "error",
-                });
-            });
-    }
-
-    useEffect(() => {
-        fetchData();
     }, [router.query.page]);
 
     return (
@@ -114,12 +88,12 @@ const Index = () => {
                     {/* Table Heading */}
                     <Box>
                         <Heading size={"xl"} mb={"4"}>
-                            Courses
+                            Users
                         </Heading>
                     </Box>
 
                     {/* Table Data */}
-                    {!!courses.length && (
+                    {!!users.length && (
                         <TableContainer
                             border={"1px"}
                             borderColor={"gray.200"}
@@ -132,75 +106,53 @@ const Index = () => {
                                 <Thead>
                                     <Tr>
                                         <Th>Id</Th>
-                                        <Th>Course Name</Th>
-                                        <Th>Author</Th>
-                                        <Th>Category</Th>
-                                        <Th>Status</Th>
+                                        <Th>Name</Th>
+                                        <Th>Email</Th>
+                                        <Th>Profile Image</Th>
+                                        <Th>Role</Th>
                                         <Th>Created On</Th>
-                                        {/* <Th>Total Videos</Th>
-                                        <Th>Total Duration</Th> */}
                                         <Th isNumeric>Actions</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
-                                    {courses.map((course) => {
+                                    {users.map((user) => {
                                         const {
                                             id,
-                                            course_name,
-                                            teacher,
-                                            category,
-                                            course_status,
+                                            name,
+                                            email,
+                                            profile_image,
+                                            is_admin,
+                                            is_teacher,
+                                            is_student,
                                             created_on,
-                                            total_videos,
-                                            total_duration,
-                                        } = course;
+                                        } = user;
                                         return (
                                             <Tr key={id}>
                                                 <Td>{id}</Td>
-                                                <Link
-                                                    href={`/admin/courses/preview/${id}`}
-                                                >
-                                                    <Td
-                                                        _hover={{
-                                                            color: "primary",
-                                                            cursor: "pointer",
-                                                        }}
-                                                    >
-                                                        {formatCourseName(
-                                                            course_name,
-                                                            60
-                                                        )}
-                                                    </Td>
-                                                </Link>
+                                                <Td>{name}</Td>
+                                                <Td>{email}</Td>
                                                 <Td py={"3 !important"}>
                                                     <Link
-                                                        href={`/admin/users/preview/${teacher.id}`}
+                                                        href={`/admin/users/preview/${id}`}
                                                     >
                                                         <Avatar
-                                                            name={String(
-                                                                teacher.name
-                                                            )}
-                                                            src={
-                                                                teacher.profile_image
-                                                            }
+                                                            name={name}
+                                                            src={profile_image}
                                                             cursor={"pointer"}
                                                             size={"md"}
                                                         />
                                                     </Link>
                                                 </Td>
                                                 <Td>
-                                                    {category.category_name}
-                                                </Td>
-                                                <Td
-                                                    textTransform={"capitalize"}
-                                                >
-                                                    {course_status}
+                                                    {formatRole(
+                                                        is_student,
+                                                        is_teacher,
+                                                        is_admin
+                                                    )}
                                                 </Td>
                                                 <Td>
                                                     {formatDate(created_on)}
                                                 </Td>
-                                                {/* <Td>{total_videos}</Td>
-                                                <Td>{total_duration}</Td> */}
                                                 <Td isNumeric>
                                                     <Box
                                                         display={"flex"}
@@ -208,27 +160,6 @@ const Index = () => {
                                                         alignItems={"center"}
                                                         gap={"3"}
                                                     >
-                                                        {course_status ==
-                                                            "requested" && (
-                                                            <Icon
-                                                                fontSize={"2xl"}
-                                                                cursor={
-                                                                    "pointer"
-                                                                }
-                                                                color={
-                                                                    "success"
-                                                                }
-                                                                as={HiCheck}
-                                                                onClick={() => {
-                                                                    changeCourseStatus(
-                                                                        id
-                                                                    );
-                                                                    router.push(
-                                                                        `/admin/courses/preview/${id}`
-                                                                    );
-                                                                }}
-                                                            />
-                                                        )}
                                                         <Icon
                                                             fontSize={"2xl"}
                                                             cursor={"pointer"}
@@ -236,7 +167,7 @@ const Index = () => {
                                                             as={HiPencilAlt}
                                                             onClick={() => {
                                                                 router.push(
-                                                                    `/admin/courses/edit/${id}`
+                                                                    `/admin/users/edit/${id}`
                                                                 );
                                                             }}
                                                         />
@@ -246,9 +177,7 @@ const Index = () => {
                                                             color={"danger"}
                                                             as={HiTrash}
                                                             onClick={() => {
-                                                                deleteCourse(
-                                                                    id
-                                                                );
+                                                                deleteUser(id);
                                                             }}
                                                         />
                                                     </Box>
@@ -264,19 +193,18 @@ const Index = () => {
                                     current={pagination.current}
                                     next={pagination.next}
                                     previous={pagination.previous}
-                                    baseUrl={"/admin/courses"}
                                 />
                             </Box>
                         </TableContainer>
                     )}
 
                     {/* empty data */}
-                    <EmptyData show={!courses.length} />
+                    <EmptyData show={!users.length} />
 
-                    {/* Add Course */}
+                    {/* Add User */}
                     <HStack justify={"end"} my={4}>
-                        <Link href={"/admin/courses/add"}>
-                            <MyButton>Add Course</MyButton>
+                        <Link href={"/admin/users/add"}>
+                            <MyButton>Add User</MyButton>
                         </Link>
                     </HStack>
                 </Box>
