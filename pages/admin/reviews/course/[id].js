@@ -32,6 +32,36 @@ const Index = () => {
 
     const router = useRouter();
 
+    const deleteReview = (id) => {
+        setLoading(true);
+        Axios.delete(`course-review/${id}/`)
+            .then((res) => {
+                swal({
+                    title: "Review Deleted",
+                    icon: "success",
+                    text: "Review is deleted successfully",
+                    type: "success",
+                });
+
+                const { page = 1 } = router.query;
+                Axios.get(
+                    `course-review/all/${router.query.id}?page=${page}`
+                ).then((res) => {
+                    setReviews(res.data.results);
+                    setPagination(res.data.pagination);
+                    setLoading(false);
+                });
+            })
+            .catch((err) => {
+                swal({
+                    icon: "error",
+                    title: "Delete Action Failed",
+                    text: `Unable to delete review`,
+                });
+                setLoading(false);
+            });
+    };
+
     useEffect(() => {
         if (router.query.id) {
             const { page = 1 } = router.query;
@@ -82,6 +112,7 @@ const Index = () => {
                                         <Th>Student</Th>
                                         <Th>Rating</Th>
                                         <Th>Created On</Th>
+                                        <Th>Actions</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
@@ -129,6 +160,21 @@ const Index = () => {
                                                     {formatDate(
                                                         review.created_on
                                                     )}
+                                                </Td>
+                                                <Td isNumeric>
+                                                    <HStack justify={"center"}>
+                                                        <Icon
+                                                            fontSize={"2xl"}
+                                                            cursor={"pointer"}
+                                                            color={"danger"}
+                                                            as={HiTrash}
+                                                            onClick={() => {
+                                                                deleteReview(
+                                                                    review.id
+                                                                );
+                                                            }}
+                                                        />
+                                                    </HStack>
                                                 </Td>
                                             </Tr>
                                         );

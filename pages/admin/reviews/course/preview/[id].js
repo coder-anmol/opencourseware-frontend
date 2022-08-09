@@ -44,7 +44,7 @@ const Preview = () => {
                 });
         }
     }, [router.query.id]);
-    console.log(review);
+
     return (
         <>
             <AdminLoader isLoading={loading} />
