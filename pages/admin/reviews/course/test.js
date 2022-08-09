@@ -51,6 +51,11 @@ const PreviewId = () => {
                 .then((res) => {
                     setCourse({
                         ...res.data,
+                        description:
+                            "sjdkfjk sdfk sdfj sdfljsda fdsljfk jsdlkfj klsdajfksdjflkasdfkdslfjd kj dsk fkdsj fsdlkfjdsk fksda;lfjdks fklsajdfksd kfs dkf jsdfskldj skdfjs afsdk fjksdaj fkds",
+                        cover_image:
+                            "https://res.cloudinary.com/dvflaxjrh/image/upload/v1659855752/uploads/quciahaydhfdbuncf3ig.jpg",
+                        cover_image_public_id: "uploads/quciahaydhfdbuncf3ig",
                     });
                     setLoading(false);
                 })

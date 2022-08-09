@@ -17,7 +17,13 @@ import Link from "next/link";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useRef } from "react";
-import { HiHome, HiLibrary, HiUsers, HiCube } from "react-icons/hi";
+import {
+    HiHome,
+    HiLibrary,
+    HiUsers,
+    HiCube,
+    HiAnnotation,
+} from "react-icons/hi";
 
 const routesList = [
     {
@@ -29,6 +35,11 @@ const routesList = [
         name: "Courses",
         link: "/admin/courses",
         icon: HiLibrary,
+    },
+    {
+        name: "Reviews",
+        link: "/admin/reviews",
+        icon: HiAnnotation,
     },
     {
         name: "Users",

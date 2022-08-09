@@ -30,7 +30,6 @@ function AddUser() {
 
     const initialFields = {
         name: "",
-        description: "",
         category: 0,
         cover: "",
     };
@@ -50,10 +49,12 @@ function AddUser() {
                 const formData = {
                     course_name: values.name,
                     category: values.category,
-                    description: values.description,
                     cover_image: res.data.image_url,
                     cover_image_public_id: res.data.public_id,
                     teacher: userData.id,
+                    published_on: new Date().toISOString(),
+                    total_duration: 0,
+                    total_videos: 0,
                     course_status: "drafted",
                 };
 
@@ -68,7 +69,6 @@ function AddUser() {
                         router.push("/admin/courses");
                     })
                     .catch((err) => {
-                        console.log(err);
                         swal({
                             icon: "error",
                             title: "Action Failed",
@@ -142,21 +142,6 @@ function AddUser() {
             }
         } else {
             error = "Course name should be at least 10 characters";
-        }
-        return error;
-    };
-
-    const validateDescription = (value) => {
-        let error;
-        if (value.length >= 30) {
-            if (value.length <= 100) {
-                error = "";
-            } else {
-                error =
-                    "Course description should not be greater than 100 characters";
-            }
-        } else {
-            error = "Course description should be at least 30 characters";
         }
         return error;
     };
@@ -243,47 +228,6 @@ function AddUser() {
                                     )}
                                 </Field>
 
-                                {/*description*/}
-                                <Field
-                                    name="description"
-                                    validate={validateDescription}
-                                >
-                                    {({ field, form }) => (
-                                        <FormControl
-                                            isInvalid={
-                                                form.errors.description &&
-                                                form.touched.description
-                                            }
-                                            mb={3}
-                                        >
-                                            <FormLabel
-                                                fontWeight={"medium"}
-                                                fontSize={"lg"}
-                                                htmlFor="email"
-                                            >
-                                                Description{" "}
-                                                <span
-                                                    style={{
-                                                        color: "var(--chakra-colors-danger)",
-                                                    }}
-                                                >
-                                                    *
-                                                </span>
-                                            </FormLabel>
-                                            <Input
-                                                {...field}
-                                                id="description"
-                                                placeholder="Description"
-                                                size={"lg"}
-                                                focusBorderColor={"primary"}
-                                                errorBorderColor={"danger"}
-                                            />
-                                            <FormErrorMessage color={"danger"}>
-                                                {form.errors.description}
-                                            </FormErrorMessage>
-                                        </FormControl>
-                                    )}
-                                </Field>
                                 {/*category */}
                                 <Field
                                     name="category"

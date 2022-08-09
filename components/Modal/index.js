@@ -18,6 +18,7 @@ const ModalDefault = ({
     action,
     isOpen,
     onClose,
+    ...props
 }) => {
     return (
         <Modal
@@ -28,21 +29,22 @@ const ModalDefault = ({
             motionPreset={"scale"}
             scrollBehavior={"inside"}
             size={{ base: "sm", sm: "md" }}
+            {...props}
         >
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent pb={2}>
                 <ModalHeader>{title}</ModalHeader>
                 <ModalCloseButton size={"lg"} />
                 <ModalBody>{children}</ModalBody>
 
-                <ModalFooter gap={"2"}>
+                {/* <ModalFooter gap={"2"}>
                     <DefaultButton py={"3"} px={"6"} onClick={action}>
                         {actionName}
                     </DefaultButton>
                     <DarkButton py={"3"} px={"6"} onClick={onClose}>
                         {closeName}
                     </DarkButton>
-                </ModalFooter>
+                </ModalFooter> */}
             </ModalContent>
         </Modal>
     );

@@ -32,34 +32,6 @@ const Index = () => {
 
     const router = useRouter();
 
-    const deleteCourse = (id) => {
-        setLoading(true);
-        Axios.delete(`course/${id}`)
-            .then((res) => {
-                swal({
-                    title: "Course Deleted",
-                    icon: "success",
-                    text: "Course is deleted successfully",
-                    type: "success",
-                });
-
-                const { page = 1 } = router.query;
-                Axios.get(`course/all?page=${page}`).then((res) => {
-                    setPagination(res.data.pagination);
-                    setCourses(res.data.results);
-                    setLoading(false);
-                });
-            })
-            .catch((err) => {
-                swal({
-                    icon: "error",
-                    title: "Delete Action Failed",
-                    text: `Unable to delete course`,
-                });
-                setLoading(false);
-            });
-    };
-
     function fetchData() {
         const { page = 1 } = router.query;
         Axios.get(`course/all?page=${page}`)
@@ -78,30 +50,6 @@ const Index = () => {
             });
     }
 
-    function changeCourseStatus(id) {
-        const data = {
-            course_status: "published",
-        };
-
-        Axios.patch(`course/change-status/${id}/`, data)
-            .then((res) => {
-                swal({
-                    title: "Action Successfull",
-                    icon: "success",
-                    text: "Course is published successfully",
-                    type: "success",
-                });
-            })
-            .catch((err) => {
-                swal({
-                    icon: "error",
-                    title: "Action Failed",
-                    text: "Unable to publish course",
-                    type: "error",
-                });
-            });
-    }
-
     useEffect(() => {
         fetchData();
     }, [router.query.page]);
@@ -114,7 +62,7 @@ const Index = () => {
                     {/* Table Heading */}
                     <Box>
                         <Heading size={"xl"} mb={"4"}>
-                            Courses
+                            Reviews
                         </Heading>
                     </Box>
 
@@ -137,9 +85,7 @@ const Index = () => {
                                         <Th>Category</Th>
                                         <Th>Status</Th>
                                         <Th>Created On</Th>
-                                        {/* <Th>Total Videos</Th>
-                                        <Th>Total Duration</Th> */}
-                                        <Th isNumeric>Actions</Th>
+                                        <Th>Published On</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
@@ -151,14 +97,13 @@ const Index = () => {
                                             category,
                                             course_status,
                                             created_on,
-                                            total_videos,
-                                            total_duration,
+                                            published_on,
                                         } = course;
                                         return (
                                             <Tr key={id}>
                                                 <Td>{id}</Td>
                                                 <Link
-                                                    href={`/admin/courses/preview/${id}`}
+                                                    href={`/admin/reviews/course/${id}`}
                                                 >
                                                     <Td
                                                         _hover={{
@@ -199,59 +144,8 @@ const Index = () => {
                                                 <Td>
                                                     {formatDate(created_on)}
                                                 </Td>
-                                                {/* <Td>{total_videos}</Td>
-                                                <Td>{total_duration}</Td> */}
                                                 <Td isNumeric>
-                                                    <Box
-                                                        display={"flex"}
-                                                        justifyContent={"end"}
-                                                        alignItems={"center"}
-                                                        gap={"3"}
-                                                    >
-                                                        {course_status ==
-                                                            "requested" && (
-                                                            <Icon
-                                                                fontSize={"2xl"}
-                                                                cursor={
-                                                                    "pointer"
-                                                                }
-                                                                color={
-                                                                    "success"
-                                                                }
-                                                                as={HiCheck}
-                                                                onClick={() => {
-                                                                    changeCourseStatus(
-                                                                        id
-                                                                    );
-                                                                    router.push(
-                                                                        `/admin/courses/preview/${id}`
-                                                                    );
-                                                                }}
-                                                            />
-                                                        )}
-                                                        <Icon
-                                                            fontSize={"2xl"}
-                                                            cursor={"pointer"}
-                                                            color={"warning"}
-                                                            as={HiPencilAlt}
-                                                            onClick={() => {
-                                                                router.push(
-                                                                    `/admin/courses/edit/${id}`
-                                                                );
-                                                            }}
-                                                        />
-                                                        <Icon
-                                                            fontSize={"2xl"}
-                                                            cursor={"pointer"}
-                                                            color={"danger"}
-                                                            as={HiTrash}
-                                                            onClick={() => {
-                                                                deleteCourse(
-                                                                    id
-                                                                );
-                                                            }}
-                                                        />
-                                                    </Box>
+                                                    {formatDate(published_on)}
                                                 </Td>
                                             </Tr>
                                         );

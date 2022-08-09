@@ -1,6 +1,6 @@
 import { Heading, Box } from "@chakra-ui/react";
 
-const Category = (props) => {
+const Category = ({ children, ...props }) => {
     return (
         <Box
             border={"1px"}
@@ -17,9 +17,10 @@ const Category = (props) => {
             _hover={{
                 bg: "gray.200",
             }}
+            {...props}
         >
             <Heading fontSize={{ base: "2xl" }} fontWeight={"light"}>
-                {props.children}
+                {children}
             </Heading>
         </Box>
     );

@@ -1,93 +1,32 @@
-import AdminWrapper from "@/components/Admin/AdminWrapper";
 import {
     Heading,
     Box,
     Input,
     FormLabel,
     FormControl,
-    FormErrorMessage,
     Select,
+    FormErrorMessage,
     HStack,
     AspectRatio,
     Image,
 } from "@chakra-ui/react";
-import { useState, useEffect, useRef } from "react";
-import { Formik, Form, Field } from "formik";
-import Button from "@/components/Button";
-import Axios from "utils/fetcher";
-import { useRouter } from "next/router";
-import useStore from "store";
 import AdminLoader from "@/components/Admin/AdminLoader";
+import AdminWrapper from "@/components/Admin/AdminWrapper";
+import { Formik, Form, Field } from "formik";
+import Axios from "utils/fetcher";
+import swal from "@sweetalert/with-react";
+import { useState, useEffect, useRef } from "react";
+import Button from "@/components/Button";
+import { useRouter } from "next/router";
 
-function AddUser() {
-    const userData = useStore((state) => state.userData);
-    const [coverImage, setCoverImage] = useState(null);
-    const [image, setImage] = useState(null);
-    const [categories, setCategories] = useState([]);
+const EditId = () => {
+    const [course, setCourse] = useState(null);
     const [loading, setLoading] = useState(true);
-    const imageUpload = useRef();
+    const [categories, setCategories] = useState(true);
+    const [coverImage, setCoverImage] = useState(null);
+    const [image, setImage] = useState("");
     const router = useRouter();
-
-    const initialFields = {
-        name: "",
-        description: "",
-        category: 0,
-        cover: "",
-    };
-
-    const createCourse = (values, actions) => {
-        const data = new FormData();
-        data.append("image", coverImage);
-        data.append("folder", "uploads");
-
-        // sending upload request
-        Axios.post("image-upload/", data, {
-            headers: {
-                "Content-Type": "multipart/form-data",
-            },
-        })
-            .then((res) => {
-                const formData = {
-                    course_name: values.name,
-                    category: values.category,
-                    description: values.description,
-                    cover_image: res.data.image_url,
-                    cover_image_public_id: res.data.public_id,
-                    teacher: userData.id,
-                    course_status: "drafted",
-                };
-
-                Axios.post(`course/`, formData)
-                    .then((res) => {
-                        swal({
-                            title: "Action Successfull",
-                            icon: "success",
-                            text: "Course created successfully",
-                            type: "success",
-                        });
-                        router.push("/admin/courses");
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                        swal({
-                            icon: "error",
-                            title: "Action Failed",
-                            text: "Unable to create course",
-                        });
-                        actions.setSubmitting(false);
-                    });
-            })
-            .catch((err) => {
-                swal({
-                    icon: "error",
-                    title: "Upload Failed",
-                    text: "Unable to upload image",
-                    showCloseButton: true,
-                    showConfirmButton: false,
-                });
-                actions.setSubmitting(false);
-            });
-    };
+    const imageUpload = useRef(null);
 
     async function selectFile(file) {
         //   if file does not exists
@@ -146,21 +85,6 @@ function AddUser() {
         return error;
     };
 
-    const validateDescription = (value) => {
-        let error;
-        if (value.length >= 30) {
-            if (value.length <= 100) {
-                error = "";
-            } else {
-                error =
-                    "Course description should not be greater than 100 characters";
-            }
-        } else {
-            error = "Course description should be at least 30 characters";
-        }
-        return error;
-    };
-
     const validateCategory = (value) => {
         let error;
         if (value) {
@@ -173,34 +97,181 @@ function AddUser() {
 
     const validateCover = async (value) => {
         let error;
-        if (value) {
-            error = await selectFile(imageUpload.current.files[0]);
-        } else {
-            error = "Select a cover image";
+
+        // old image exists
+        if (course.cover_image) {
+            // unchanged image
+            if (!value) {
+                error = "";
+            } else {
+                // changed image
+                if (value) {
+                    error = await selectFile(imageUpload.current.files[0]);
+                } else {
+                    error = "Select a cover image";
+                }
+            }
         }
+
         return error;
     };
 
+    const updateCourse = (values, actions) => {
+        // old image exists
+        if (course.cover_image) {
+            // unchanged image
+            if (!values.cover) {
+                const data = {
+                    id: values.id,
+                    course_name: values.name,
+                    published_on: values.published_on,
+                    course_status: values.course_status,
+                    total_videos: values.total_videos,
+                    total_duration: values.total_duration,
+                    category: Number(values.category),
+                    teacher: values.teacher,
+                    cover_image: values.cover_image,
+                    cover_image_public_id: values.cover_image_public_id,
+                };
+
+                Axios.patch(`course/${values.id}/`, data)
+                    .then((res) => {
+                        swal({
+                            title: "Action Successfull",
+                            icon: "success",
+                            text: "Course updated successfully",
+                            type: "success",
+                        });
+                        router.push("/admin/courses");
+                    })
+                    .catch((err) => {
+                        swal({
+                            icon: "error",
+                            title: "Action Failed",
+                            text: "Unable to update course",
+                        });
+                        actions.setSubmitting(false);
+                    });
+            } else {
+                // changed image
+                const data = new FormData();
+                data.append("image", coverImage);
+                data.append("folder", "uploads");
+
+                // Todo: fix after image is added in model
+                // data.append("public_id", values.cover_image_public_id);
+
+                // sending upload request
+                Axios.post("image-upload/", data, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                })
+                    .then((res) => {
+                        const data = {
+                            id: values.id,
+                            course_name: values.name,
+                            published_on: values.published_on,
+                            course_status: values.course_status,
+                            total_videos: values.total_videos,
+                            total_duration: values.total_duration,
+                            category: Number(values.category),
+                            teacher: values.teacher,
+                            cover_image: res.data.image_url,
+                            cover_image_public_id: res.data.public_id,
+                        };
+
+                        Axios.patch(`course/${values.id}/`, data)
+                            .then((res) => {
+                                swal({
+                                    title: "Action Successfull",
+                                    icon: "success",
+                                    text: "Course updated successfully",
+                                    type: "success",
+                                });
+                                router.push("/admin/courses");
+                            })
+                            .catch((err) => {
+                                swal({
+                                    icon: "error",
+                                    title: "Action Failed",
+                                    text: "Unable to update course",
+                                });
+                                actions.setSubmitting(false);
+                            });
+                    })
+                    .catch((err) => {
+                        swal({
+                            icon: "error",
+                            title: "Upload Failed",
+                            text: "Unable to upload image",
+                            showCloseButton: true,
+                            showConfirmButton: false,
+                        });
+                        actions.setSubmitting(false);
+                    });
+            }
+        }
+    };
+
     useEffect(() => {
-        Axios.get("category/all").then((res) => {
-            setCategories(res.data.results);
-            setLoading(false);
-        });
-    }, []);
+        if (router.query.id) {
+            Axios.get(`course/${router.query.id}/`)
+                .then((res) => {
+                    const {
+                        id,
+                        course_name,
+                        published_on,
+                        course_status,
+                        total_videos,
+                        total_duration,
+                        category,
+                        teacher,
+                        cover_image = "https://res.cloudinary.com/dvflaxjrh/image/upload/v1659855752/uploads/quciahaydhfdbuncf3ig.jpg",
+                        cover_image_public_id = "uploads/quciahaydhfdbuncf3ig",
+                    } = res.data;
+
+                    setCourse({
+                        id,
+                        name: course_name,
+                        published_on,
+                        course_status,
+                        total_videos,
+                        total_duration,
+                        category: category.id,
+                        teacher: teacher.id,
+                        cover_image,
+                        cover_image_public_id,
+                        cover: "",
+                    });
+
+                    Axios.get("category/all").then((res) => {
+                        setCategories(res.data.results);
+                        setLoading(false);
+                    });
+                })
+                .catch((err) => {
+                    swal({
+                        icon: "error",
+                        title: "Data Fetching Failed",
+                        text: "Unable to fetch user's data",
+                    });
+                    router.push("/admin/courses");
+                });
+        }
+    }, [router.query.id]);
 
     return (
         <>
             <AdminLoader isLoading={loading} />
             <AdminWrapper show={!loading}>
                 <Box>
-                    <Heading>Add Course</Heading>
+                    <Heading>Edit Course</Heading>
                 </Box>
                 <Box pt={8}>
                     <Formik
-                        initialValues={initialFields}
-                        onSubmit={(values, actions) => {
-                            createCourse(values, actions);
-                        }}
+                        initialValues={{ ...course }}
+                        onSubmit={updateCourse}
                     >
                         {(props) => (
                             <Form id="add-course">
@@ -243,47 +314,6 @@ function AddUser() {
                                     )}
                                 </Field>
 
-                                {/*description*/}
-                                <Field
-                                    name="description"
-                                    validate={validateDescription}
-                                >
-                                    {({ field, form }) => (
-                                        <FormControl
-                                            isInvalid={
-                                                form.errors.description &&
-                                                form.touched.description
-                                            }
-                                            mb={3}
-                                        >
-                                            <FormLabel
-                                                fontWeight={"medium"}
-                                                fontSize={"lg"}
-                                                htmlFor="email"
-                                            >
-                                                Description{" "}
-                                                <span
-                                                    style={{
-                                                        color: "var(--chakra-colors-danger)",
-                                                    }}
-                                                >
-                                                    *
-                                                </span>
-                                            </FormLabel>
-                                            <Input
-                                                {...field}
-                                                id="description"
-                                                placeholder="Description"
-                                                size={"lg"}
-                                                focusBorderColor={"primary"}
-                                                errorBorderColor={"danger"}
-                                            />
-                                            <FormErrorMessage color={"danger"}>
-                                                {form.errors.description}
-                                            </FormErrorMessage>
-                                        </FormControl>
-                                    )}
-                                </Field>
                                 {/*category */}
                                 <Field
                                     name="category"
@@ -370,6 +400,21 @@ function AddUser() {
                                                     *
                                                 </span>
                                             </FormLabel>
+                                            {!coverImage && (
+                                                <Box pb={"4"}>
+                                                    <AspectRatio>
+                                                        <Image
+                                                            alt="Preview Cover Image"
+                                                            src={
+                                                                course.cover_image
+                                                            }
+                                                            rounded={"xl"}
+                                                            shadow={"lg"}
+                                                        />
+                                                    </AspectRatio>
+                                                </Box>
+                                            )}
+
                                             {coverImage && (
                                                 <Box pb={"4"}>
                                                     <AspectRatio>
@@ -402,7 +447,7 @@ function AddUser() {
                                         isLoading={props.isSubmitting}
                                         type="submit"
                                     >
-                                        Create Course
+                                        Update Course
                                     </Button>
                                 </HStack>
                             </Form>
@@ -412,7 +457,7 @@ function AddUser() {
             </AdminWrapper>
         </>
     );
-}
+};
 
-AddUser.layout = "admin";
-export default AddUser;
+EditId.layout = "admin";
+export default EditId;
