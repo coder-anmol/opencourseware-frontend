@@ -23,6 +23,7 @@ import {
     HiUsers,
     HiCube,
     HiAnnotation,
+    HiColorSwatch,
 } from "react-icons/hi";
 
 const routesList = [
@@ -40,6 +41,11 @@ const routesList = [
         name: "Courses",
         link: "/admin/courses",
         icon: HiLibrary,
+    },
+    {
+        name: "Enrollments",
+        link: "/admin/enrollments",
+        icon: HiColorSwatch,
     },
     {
         name: "Reviews",
