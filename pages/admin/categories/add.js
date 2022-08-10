@@ -126,7 +126,7 @@ function AddUser() {
                                         isLoading={props.isSubmitting}
                                         type="submit"
                                     >
-                                        Create User
+                                        Create Category
                                     </Button>
                                 </HStack>
                             </Form>

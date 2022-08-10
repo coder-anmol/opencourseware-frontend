@@ -7,7 +7,13 @@ import {
 import { HStack, Button, IconButton } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 
-const Pagination = ({ count, current, next, previous }) => {
+const Pagination = ({
+    count,
+    current,
+    next,
+    previous,
+    baseUrl = "/admin/users",
+}) => {
     const router = useRouter();
 
     return (
@@ -20,7 +26,7 @@ const Pagination = ({ count, current, next, previous }) => {
                     cursor={"pointer"}
                     shadow={"sm"}
                     onClick={() => {
-                        router.push("/admin/users?page=1");
+                        router.push(`${baseUrl}?page=1`);
                     }}
                     disabled={!previous}
                 />
@@ -31,7 +37,7 @@ const Pagination = ({ count, current, next, previous }) => {
                     cursor={"pointer"}
                     shadow={"sm"}
                     onClick={() => {
-                        router.push(`/admin/users?page=${current - 1}`);
+                        router.push(`${baseUrl}?page=${current - 1}`);
                     }}
                     disabled={!previous}
                 />
@@ -51,7 +57,7 @@ const Pagination = ({ count, current, next, previous }) => {
                     cursor={"pointer"}
                     shadow={"sm"}
                     onClick={() => {
-                        router.push(`/admin/users?page=${current + 1}`);
+                        router.push(`${baseUrl}?page=${current + 1}`);
                     }}
                     disabled={!next}
                 />
@@ -63,7 +69,7 @@ const Pagination = ({ count, current, next, previous }) => {
                     cursor={"pointer"}
                     shadow={"sm"}
                     onClick={() => {
-                        router.push(`/admin/users?page=${count}`);
+                        router.push(`${baseUrl}?page=${count}`);
                     }}
                     disabled={!next}
                 />

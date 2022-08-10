@@ -1,27 +1,27 @@
 import {
-    Input,
-    FormControl,
-    FormLabel,
-    FormErrorMessage,
-    Textarea,
     Heading,
+    Input,
+    RadioGroup,
+    FormLabel,
+    FormControl,
+    FormErrorMessage,
     HStack,
-    Container,
-    Box,
+    Textarea,
+    Avatar,
 } from "@chakra-ui/react";
+import AdminLoader from "@/components/Admin/AdminLoader";
+import AdminWrapper from "@/components/Admin/AdminWrapper";
 import { Formik, Form, Field } from "formik";
-import validator from "validator";
-import Button from "@/components/Button";
 import Axios from "utils/fetcher";
+import swal from "@sweetalert/with-react";
+import { useState, useEffect, useRef } from "react";
+import Button from "@/components/Button";
 import { useRouter } from "next/router";
 
-const Contact = () => {
+const Preview = () => {
+    const [loading, setLoading] = useState(true);
+    const [initialFields, setInitialFields] = useState({});
     const router = useRouter();
-    const initialFields = {
-        name: "",
-        email: "",
-        message: "",
-    };
 
     const validateName = (value) => {
         let error;
@@ -61,63 +61,47 @@ const Contact = () => {
         return error;
     };
 
-    function submitContact(values, actions) {
-        const data = {
-            name: values.name,
-            email: values.email,
-            message: values.message,
-        };
-        Axios.post("contact-us/", data)
-            .then((res) => {
-                swal({
-                    title: "Action Successfull",
-                    icon: "success",
-                    text: "Contact message is posted",
-                    type: "success",
+    useEffect(() => {
+        if (router.query.id) {
+            Axios.get(`contact-us/${router.query.id}`)
+                .then((res) => {
+                    const { id, name, email, message } = res.data;
+
+                    const initialValues = {
+                        id,
+                        name,
+                        email,
+                        message,
+                    };
+
+                    setInitialFields(initialValues);
+                    setLoading(false);
+                })
+                .catch((err) => {
+                    swal({
+                        icon: "error",
+                        title: "Data Fetching Failed",
+                        text: "Unable to fetch contact's data",
+                    });
+                    router.push("/admin/contacts");
                 });
-                router.push("/");
-            })
-            .catch((err) => {
-                swal({
-                    icon: "error",
-                    title: "Action Failed",
-                    text: "Unable to post contact message",
-                });
-                actions.setSubmitting(false);
-            });
-    }
+        }
+    }, [router.query.id]);
 
     return (
-        <Container maxW={"container.lg"}>
-            <Box
-                mt={{ base: "28", lg: "36" }}
-                mb={{ base: "20", lg: "28" }}
-                pt={"1"}
-                pb={"1"}
-                px={"6"}
-                rounded={"3xl"}
-                bg={"white"}
-                shadow={"2xl"}
-            >
+        <>
+            <AdminLoader isLoading={loading} />
+            <AdminWrapper show={!loading}>
                 <Formik
                     initialValues={initialFields}
                     onSubmit={(values, actions) => {
-                        submitContact(values, actions);
+                        router.push(`/admin/users/edit/${initialFields.id}`);
                     }}
                 >
                     {(props) => (
-                        <Form
-                            id="contact"
-                            style={{
-                                margin: "var(--chakra-sizes-16) 0",
-                            }}
-                        >
-                            <Heading
-                                fontSize={"3xl"}
-                                textAlign={"center"}
-                                mb={4}
-                            >
-                                Contact Us
+                        <Form id="edit-profile">
+                            <Heading fontSize={"3xl"} mb={6}>
+                                Contact Preview
                             </Heading>
 
                             {/*name */}
@@ -140,9 +124,7 @@ const Contact = () => {
                                                 style={{
                                                     color: "var(--chakra-colors-danger)",
                                                 }}
-                                            >
-                                                *
-                                            </span>
+                                            ></span>
                                         </FormLabel>
                                         <Input
                                             {...field}
@@ -151,6 +133,7 @@ const Contact = () => {
                                             size={"lg"}
                                             focusBorderColor={"primary"}
                                             errorBorderColor={"danger"}
+                                            isDisabled
                                         />
                                         <FormErrorMessage color={"danger"}>
                                             {form.errors.name}
@@ -179,9 +162,7 @@ const Contact = () => {
                                                 style={{
                                                     color: "var(--chakra-colors-danger)",
                                                 }}
-                                            >
-                                                *
-                                            </span>
+                                            ></span>
                                         </FormLabel>
                                         <Input
                                             {...field}
@@ -190,6 +171,7 @@ const Contact = () => {
                                             size={"lg"}
                                             focusBorderColor={"primary"}
                                             errorBorderColor={"danger"}
+                                            isDisabled
                                         />
                                         <FormErrorMessage color={"danger"}>
                                             {form.errors.email}
@@ -218,9 +200,7 @@ const Contact = () => {
                                                 style={{
                                                     color: "var(--chakra-colors-danger)",
                                                 }}
-                                            >
-                                                *
-                                            </span>
+                                            ></span>
                                         </FormLabel>
                                         <Textarea
                                             {...field}
@@ -230,6 +210,7 @@ const Contact = () => {
                                             rows={"6"}
                                             focusBorderColor={"primary"}
                                             errorBorderColor={"danger"}
+                                            isDisabled
                                         />
                                         <FormErrorMessage color={"danger"}>
                                             {form.errors.message}
@@ -237,22 +218,13 @@ const Contact = () => {
                                     </FormControl>
                                 )}
                             </Field>
-
-                            <HStack justify={"center"}>
-                                <Button
-                                    mt={4}
-                                    isLoading={props.isSubmitting}
-                                    type="submit"
-                                >
-                                    Submit
-                                </Button>
-                            </HStack>
                         </Form>
                     )}
                 </Formik>
-            </Box>
-        </Container>
+            </AdminWrapper>
+        </>
     );
 };
 
-export default Contact;
+Preview.layout = "admin";
+export default Preview;

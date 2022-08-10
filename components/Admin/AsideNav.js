@@ -14,16 +14,28 @@ import {
 } from "@chakra-ui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { MdCheckCircle } from "react-icons/md";
+import { MdCheckCircle, MdContacts } from "react-icons/md";
 import { useRouter } from "next/router";
 import { useRef } from "react";
-import { HiHome, HiLibrary, HiUsers, HiCube } from "react-icons/hi";
+import {
+    HiHome,
+    HiLibrary,
+    HiUsers,
+    HiCube,
+    HiAnnotation,
+    HiColorSwatch,
+} from "react-icons/hi";
 
 const routesList = [
     {
-        name: "Users",
-        link: "/admin/users",
-        icon: HiUsers,
+        name: "Categories",
+        link: "/admin/categories",
+        icon: HiCube,
+    },
+    {
+        name: "Contacts",
+        link: "/admin/contacts",
+        icon: MdContacts,
     },
     {
         name: "Courses",
@@ -31,9 +43,19 @@ const routesList = [
         icon: HiLibrary,
     },
     {
-        name: "Categories",
-        link: "/admin/categories",
-        icon: HiCube,
+        name: "Enrollments",
+        link: "/admin/enrollments",
+        icon: HiColorSwatch,
+    },
+    {
+        name: "Reviews",
+        link: "/admin/reviews",
+        icon: HiAnnotation,
+    },
+    {
+        name: "Users",
+        link: "/admin/users",
+        icon: HiUsers,
     },
 ];
 
