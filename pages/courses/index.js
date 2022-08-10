@@ -1,13 +1,30 @@
-import CoursesComponent from "@/components/Courses";
+import Courses from "@/components/Courses";
 import TeacherProfile from "@/components/Teacher";
+import Axios from "utils/fetcher";
 
-const Courses = () => {
+const CoursesPage = ({ categories, courses }) => {
     return (
         <>
-            <CoursesComponent />
-            <TeacherProfile />
+            <Courses categories={categories} courses={courses} />
+            {/* <TeacherProfile /> */}
         </>
     );
 };
 
-export default Courses;
+export async function getStaticProps(context) {
+    const categories = await Axios.get("category/all/");
+    const categoriesData = await categories.data.results;
+
+    const courses = await Axios.get("course/all-published/");
+    const coursesData = await courses.data.results;
+
+    return {
+        props: {
+            categories: categoriesData,
+            courses: coursesData.reverse(),
+        },
+        revalidate: 7200,
+    };
+}
+
+export default CoursesPage;

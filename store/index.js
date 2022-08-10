@@ -52,6 +52,10 @@ const useStore = create((set) => ({
 
     logoutUser: () => {
         removeUserInLocalStorage();
+        set((state) => ({ ...state, user: null, userData: null }));
+    },
+    logoutAdmin: () => {
+        removeUserInLocalStorage();
         set((state) => ({ ...state, user: null }));
     },
 }));
