@@ -26,7 +26,7 @@ import {
     HiColorSwatch,
 } from "react-icons/hi";
 
-const routesList = [
+const adminRoutesList = [
     {
         name: "Categories",
         link: "/admin/categories",
@@ -59,7 +59,25 @@ const routesList = [
     },
 ];
 
-const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
+const teacherRoutesList = [
+    {
+        name: "Courses",
+        link: "/teacher/courses",
+        icon: HiLibrary,
+    },
+    {
+        name: "Enrollments",
+        link: "/teacher/enrollments",
+        icon: HiColorSwatch,
+    },
+    {
+        name: "Reviews",
+        link: "/teacher/reviews",
+        icon: HiAnnotation,
+    },
+];
+
+const AsideNavbar = ({ isOpen, onOpen, onClose, teacher = false }) => {
     const router = useRouter();
     const btnRef = useRef();
 
@@ -92,7 +110,9 @@ const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
                                 objectFit="cover"
                             />
                         </Box>
-                        <Heading fontSize={{ lg: "3xl" }}>Admin.</Heading>
+                        <Heading fontSize={{ lg: "3xl" }}>
+                            {teacher ? "Teacher." : "Admin."}
+                        </Heading>
                     </HStack>
                 </HStack>
 
@@ -120,36 +140,74 @@ const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
                     transition={"all 300ms ease-in-out 60ms"}
                     cursor={"pointer"}
                 >
-                    <Link href={"/admin"}>
-                        <ListItem
-                            {...(router.pathname == "/admin" && {
-                                bg: "primary",
-                                color: "white",
-                                shadow: "lg",
-                            })}
-                        >
-                            <ListIcon as={HiHome} />
-                            Home
-                        </ListItem>
-                    </Link>
-                    {routesList.map((item, i) => {
-                        const result = router.pathname.includes(item.link);
+                    {teacher ? (
+                        <Link href={"/teacher"}>
+                            <ListItem
+                                {...(router.pathname == "/teacher" && {
+                                    bg: "primary",
+                                    color: "white",
+                                    shadow: "lg",
+                                })}
+                            >
+                                <ListIcon as={HiHome} />
+                                Home
+                            </ListItem>
+                        </Link>
+                    ) : (
+                        <Link href={"/admin"}>
+                            <ListItem
+                                {...(router.pathname == "/admin" && {
+                                    bg: "primary",
+                                    color: "white",
+                                    shadow: "lg",
+                                })}
+                            >
+                                <ListIcon as={HiHome} />
+                                Home
+                            </ListItem>
+                        </Link>
+                    )}
+                    {teacher
+                        ? teacherRoutesList.map((item, i) => {
+                              const result = router.pathname.includes(
+                                  item.link
+                              );
 
-                        return (
-                            <Link key={i} href={item.link}>
-                                <ListItem
-                                    {...(result && {
-                                        bg: "primary",
-                                        color: "white",
-                                        shadow: "lg",
-                                    })}
-                                >
-                                    <ListIcon as={item.icon} />
-                                    {item.name}
-                                </ListItem>
-                            </Link>
-                        );
-                    })}
+                              return (
+                                  <Link key={i} href={item.link}>
+                                      <ListItem
+                                          {...(result && {
+                                              bg: "primary",
+                                              color: "white",
+                                              shadow: "lg",
+                                          })}
+                                      >
+                                          <ListIcon as={item.icon} />
+                                          {item.name}
+                                      </ListItem>
+                                  </Link>
+                              );
+                          })
+                        : adminRoutesList.map((item, i) => {
+                              const result = router.pathname.includes(
+                                  item.link
+                              );
+
+                              return (
+                                  <Link key={i} href={item.link}>
+                                      <ListItem
+                                          {...(result && {
+                                              bg: "primary",
+                                              color: "white",
+                                              shadow: "lg",
+                                          })}
+                                      >
+                                          <ListIcon as={item.icon} />
+                                          {item.name}
+                                      </ListItem>
+                                  </Link>
+                              );
+                          })}
                 </Stack>
             </Stack>
 
@@ -177,7 +235,7 @@ const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
                                         lg: "3xl",
                                     }}
                                 >
-                                    Admin.
+                                    {teacher ? "Teacher." : "Admin."}
                                 </Heading>
                             </HStack>
                         </HStack>
@@ -206,40 +264,76 @@ const AsideNavbar = ({ isOpen, onOpen, onClose }) => {
                             transition={"all 300ms ease-in-out 60ms"}
                             cursor={"pointer"}
                         >
-                            <Link href={"/admin"}>
-                                <ListItem
-                                    {...(router.pathname == "/admin" && {
-                                        bg: "primary",
-                                        color: "white",
-                                        shadow: "lg",
-                                    })}
-                                    onClick={onClose}
-                                >
-                                    <ListIcon as={MdCheckCircle} />
-                                    Home
-                                </ListItem>
-                            </Link>
-                            {routesList.map((item, i) => {
-                                const result = router.pathname.includes(
-                                    item.link
-                                );
+                            {teacher ? (
+                                <Link href={"/teacher"}>
+                                    <ListItem
+                                        {...(router.pathname == "/teacher" && {
+                                            bg: "primary",
+                                            color: "white",
+                                            shadow: "lg",
+                                        })}
+                                        onClick={onClose}
+                                    >
+                                        <ListIcon as={MdCheckCircle} />
+                                        Home
+                                    </ListItem>
+                                </Link>
+                            ) : (
+                                <Link href={"/admin"}>
+                                    <ListItem
+                                        {...(router.pathname == "/admin" && {
+                                            bg: "primary",
+                                            color: "white",
+                                            shadow: "lg",
+                                        })}
+                                        onClick={onClose}
+                                    >
+                                        <ListIcon as={MdCheckCircle} />
+                                        Home
+                                    </ListItem>
+                                </Link>
+                            )}
+                            {teacher
+                                ? teacherRoutesList.map((item, i) => {
+                                      const result = router.pathname.includes(
+                                          item.link
+                                      );
 
-                                return (
-                                    <Link key={i} href={item.link}>
-                                        <ListItem
-                                            {...(result && {
-                                                bg: "primary",
-                                                color: "white",
-                                                shadow: "lg",
-                                            })}
-                                            onClick={onClose}
-                                        >
-                                            <ListIcon as={MdCheckCircle} />
-                                            {item.name}
-                                        </ListItem>
-                                    </Link>
-                                );
-                            })}
+                                      return (
+                                          <Link key={i} href={item.link}>
+                                              <ListItem
+                                                  {...(result && {
+                                                      bg: "primary",
+                                                      color: "white",
+                                                      shadow: "lg",
+                                                  })}
+                                              >
+                                                  <ListIcon as={item.icon} />
+                                                  {item.name}
+                                              </ListItem>
+                                          </Link>
+                                      );
+                                  })
+                                : adminRoutesList.map((item, i) => {
+                                      const result = router.pathname.includes(
+                                          item.link
+                                      );
+
+                                      return (
+                                          <Link key={i} href={item.link}>
+                                              <ListItem
+                                                  {...(result && {
+                                                      bg: "primary",
+                                                      color: "white",
+                                                      shadow: "lg",
+                                                  })}
+                                              >
+                                                  <ListIcon as={item.icon} />
+                                                  {item.name}
+                                              </ListItem>
+                                          </Link>
+                                      );
+                                  })}
                         </Stack>
                     </DrawerBody>
                 </DrawerContent>
