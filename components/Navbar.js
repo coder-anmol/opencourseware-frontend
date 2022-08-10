@@ -212,7 +212,18 @@ const Navbar = () => {
                                                 shadow={"xl"}
                                             >
                                                 {userData &&
-                                                    !userData.is_admin && (
+                                                    userData.is_teacher && (
+                                                        <Link href={"/teacher"}>
+                                                            <a>
+                                                                <MenuItem>
+                                                                    Teacher Dash
+                                                                </MenuItem>
+                                                            </a>
+                                                        </Link>
+                                                    )}
+
+                                                {userData &&
+                                                    userData.is_student && (
                                                         <Link
                                                             href={"/dashboard"}
                                                         >

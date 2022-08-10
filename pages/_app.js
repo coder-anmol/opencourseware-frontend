@@ -3,6 +3,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import DefaultLayout from "layouts/default";
 import ProfileLayout from "layouts/profile";
 import AdminLayout from "layouts/admin";
+import TeacherLayout from "layouts/teacher";
 import WatchCourseLayout from "layouts/watchCourse";
 import Theme from "../theme";
 import ProgressBar from "nextjs-progressbar";
@@ -16,6 +17,7 @@ const layouts = {
     default: DefaultLayout,
     profile: ProfileLayout,
     admin: AdminLayout,
+    teacher: TeacherLayout,
     watchcourse: WatchCourseLayout,
 };
 
