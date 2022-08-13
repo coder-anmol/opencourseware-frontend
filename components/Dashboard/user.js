@@ -127,13 +127,6 @@ const UserDashboard = ({ enrollments, user, categories, currentCourse }) => {
                             {!enrollments.length && (
                                 <>
                                     <EmptyData show={true} />
-                                    <HStack justify={"end"}>
-                                        <Link href={"/courses"}>
-                                            <CustomButton>
-                                                Get Enrolled
-                                            </CustomButton>
-                                        </Link>
-                                    </HStack>
                                 </>
                             )}
 
@@ -149,6 +142,12 @@ const UserDashboard = ({ enrollments, user, categories, currentCourse }) => {
                                     />
                                 );
                             })}
+
+                            <HStack justify={"end"} pt={8}>
+                                <Link href={"/courses"}>
+                                    <CustomButton>Explore Courses</CustomButton>
+                                </Link>
+                            </HStack>
                         </Stack>
                     </Box>
                 </Container>

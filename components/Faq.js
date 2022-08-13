@@ -36,17 +36,20 @@ const Faq = () => {
                                 fontSize={"xl"}
                                 py={3}
                             >
-                                Section 1 title
+                                What is OpenCourseWare ?
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
+                        OpenCourseWare is an e-learning web application
+                        platform. It is free to use and totally community
+                        driven. Any person who wants to teach any skill or a
+                        subject can register and create courses. Any person who
+                        wants to learn a subject or a new skill can register and
+                        get enrolled in a course and start learning in a
+                        distraction free environment. A person can track his
+                        progress, give reviews to the course instructor.
                     </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem borderBottom={"0px"}>
@@ -58,17 +61,13 @@ const Faq = () => {
                                 fontSize={"xl"}
                                 py={3}
                             >
-                                Section 1 title
+                                Is OpenCourseWare Free ?
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
+                        Yes, OpenCourseWare is free to use.
                     </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem borderBottom={"0px"}>
@@ -80,17 +79,15 @@ const Faq = () => {
                                 fontSize={"xl"}
                                 py={3}
                             >
-                                Section 1 title
+                                Do OpenCourseWare has course approval system ?
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
+                        Yes, OpenCourseWare has course approval system. Admin
+                        will approve the courses created by the teachers before
+                        publishing them.
                     </AccordionPanel>
                 </AccordionItem>
                 <AccordionItem borderBottom={"0px"}>
@@ -102,17 +99,13 @@ const Faq = () => {
                                 fontSize={"xl"}
                                 py={3}
                             >
-                                Section 1 title
+                                {"Does the student's progress is saved ?"}
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
+                        Yes, the progress of a student is saved.
                     </AccordionPanel>
                 </AccordionItem>
 
@@ -125,17 +118,15 @@ const Faq = () => {
                                 fontSize={"xl"}
                                 py={3}
                             >
-                                Section 2 title
+                                Does OpenCourseWare supports multiple devices
+                                login?
                             </Box>
                             <AccordionIcon />
                         </AccordionButton>
                     </h2>
                     <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua. Ut enim ad minim veniam, quis nostrud
-                        exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
+                        Yes, user can login from multiple devices and his/her
+                        progress will be in sync on all devices.
                     </AccordionPanel>
                 </AccordionItem>
             </Accordion>
