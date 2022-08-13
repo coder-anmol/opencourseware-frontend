@@ -137,8 +137,8 @@ const Index = () => {
                                         <Th>Category</Th>
                                         <Th>Status</Th>
                                         <Th>Created On</Th>
-                                        {/* <Th>Total Videos</Th>
-                                        <Th>Total Duration</Th> */}
+                                        <Th>Total Videos</Th>
+                                        {/* <Th>Total Duration</Th> */}
                                         <Th isNumeric>Actions</Th>
                                     </Tr>
                                 </Thead>
@@ -199,8 +199,8 @@ const Index = () => {
                                                 <Td>
                                                     {formatDate(created_on)}
                                                 </Td>
-                                                {/* <Td>{total_videos}</Td>
-                                                <Td>{total_duration}</Td> */}
+                                                <Td>{total_videos}</Td>
+                                                {/* <Td>{total_duration}</Td> */}
                                                 <Td isNumeric>
                                                     <Box
                                                         display={"flex"}

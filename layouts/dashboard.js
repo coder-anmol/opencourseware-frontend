@@ -1,10 +1,12 @@
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useState, useEffect } from "react";
 import useStore from "store";
 import { useRouter } from "next/router";
 import swal from "sweetalert";
 import { checkRole } from "store";
 
-const WatchCourseLayout = ({ children }) => {
+function DashboardLayout({ children }) {
     const [loading, setLoading] = useState(true);
     const user = useStore((state) => state.user);
     const userData = useStore((state) => state.userData);
@@ -29,7 +31,17 @@ const WatchCourseLayout = ({ children }) => {
         }
     }, [user, userData]);
 
-    return <>{!loading && <>{children}</>}</>;
-};
+    return (
+        <>
+            {!loading && (
+                <>
+                    <Header />
+                    {children}
+                    <Footer />
+                </>
+            )}
+        </>
+    );
+}
 
-export default WatchCourseLayout;
+export default DashboardLayout;

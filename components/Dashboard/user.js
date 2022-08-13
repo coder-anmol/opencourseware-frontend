@@ -4,12 +4,15 @@ import {
     Container,
     Stack,
     HStack,
-    Button,
     Select,
+    Button,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import CourseCard from "../Card/course";
+import EmptyData from "../EmptyData";
+import CustomButton from "../Button";
 
-const UserDashboard = () => {
+const UserDashboard = ({ enrollments, user, categories, currentCourse }) => {
     return (
         <Box my={{ base: "24", lg: "28" }}>
             <Box
@@ -27,8 +30,9 @@ const UserDashboard = () => {
                             <Heading
                                 fontSize={{ base: "xl", lg: "2xl" }}
                                 mb={{ base: "3", lg: "6" }}
+                                textTransform={"capitalize"}
                             >
-                                Hi, Anmol Sharma,
+                                Hi, {user.name},
                             </Heading>
                             <Heading fontSize={{ base: "2xl", lg: "4xl" }}>
                                 OpenCourseWare
@@ -40,31 +44,41 @@ const UserDashboard = () => {
             <Box>
                 <Container maxW={"container.xxl"}>
                     {/* Current Learning */}
-                    <Box
-                        mb={{ base: "6" }}
-                        px={{ base: "3", sm: "4", md: "5", lg: "6" }}
-                        py={{ base: "3", sm: "4", md: "5", lg: "6" }}
-                        rounded={"xl"}
-                        shadow={"xl"}
-                        bg={"white"}
-                    >
-                        <Heading
-                            fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
-                            mb={{
-                                base: "1",
-                                sm: "3",
-                                md: "4",
-                                lg: "6",
-                            }}
-                        >
-                            Continue Learning
-                        </Heading>
 
-                        {/* current course */}
-                        <Stack gap={4} py={3}>
-                            <CourseCard />
-                        </Stack>
-                    </Box>
+                    {currentCourse.visible && (
+                        <Box
+                            mb={{ base: "6" }}
+                            px={{ base: "3", sm: "4", md: "5", lg: "6" }}
+                            py={{ base: "3", sm: "4", md: "5", lg: "6" }}
+                            rounded={"xl"}
+                            shadow={"xl"}
+                            bg={"white"}
+                        >
+                            <Heading
+                                fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
+                                mb={{
+                                    base: "1",
+                                    sm: "3",
+                                    md: "4",
+                                    lg: "6",
+                                }}
+                            >
+                                Continue Learning
+                            </Heading>
+
+                            <Stack gap={4} py={3}>
+                                <CourseCard
+                                    enrollment={currentCourse.course}
+                                    category={
+                                        categories[
+                                            currentCourse.course.course[0]
+                                                .category
+                                        ].category_name
+                                    }
+                                />
+                            </Stack>
+                        </Box>
+                    )}
 
                     {/* Enrolled Courses */}
                     <Box
@@ -103,30 +117,38 @@ const UserDashboard = () => {
                                     p={"5"}
                                     rounded={"full"}
                                 >
-                                    13
+                                    {enrollments.length}
                                 </Button>
                             </HStack>
-                            <Box>
-                                <Select
-                                    variant="filled"
-                                    placeholder="Filter By Category"
-                                    fontSize={"lg"}
-                                >
-                                    <option>Python</option>
-                                    <option>JavaScript</option>
-                                    <option>C++</option>
-                                    <option>Data Structures</option>
-                                </Select>
-                            </Box>
                         </HStack>
 
                         {/* current course */}
                         <Stack gap={4} py={3}>
-                            <CourseCard />
-                            <CourseCard />
-                            <CourseCard />
-                            <CourseCard />
-                            <CourseCard />
+                            {!enrollments.length && (
+                                <>
+                                    <EmptyData show={true} />
+                                    <HStack justify={"end"}>
+                                        <Link href={"/courses"}>
+                                            <CustomButton>
+                                                Get Enrolled
+                                            </CustomButton>
+                                        </Link>
+                                    </HStack>
+                                </>
+                            )}
+
+                            {/* if enrollments exists */}
+                            {enrollments.map((enrollment, i) => {
+                                const category =
+                                    categories[enrollment.course[0].category];
+                                return (
+                                    <CourseCard
+                                        key={i}
+                                        enrollment={enrollment}
+                                        category={category.category_name}
+                                    />
+                                );
+                            })}
                         </Stack>
                     </Box>
                 </Container>

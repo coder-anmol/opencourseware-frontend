@@ -5,6 +5,7 @@ import ProfileLayout from "layouts/profile";
 import AdminLayout from "layouts/admin";
 import TeacherLayout from "layouts/teacher";
 import WatchCourseLayout from "layouts/watchCourse";
+import DashboardLayout from "layouts/dashboard";
 import Theme from "../theme";
 import ProgressBar from "nextjs-progressbar";
 import { useEffect } from "react";
@@ -19,6 +20,7 @@ const layouts = {
     admin: AdminLayout,
     teacher: TeacherLayout,
     watchcourse: WatchCourseLayout,
+    dashboard: DashboardLayout,
 };
 
 function MyApp({ Component, pageProps }) {

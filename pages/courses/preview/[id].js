@@ -34,7 +34,6 @@ const CoursePreview = () => {
 
     function handleEnrollNow() {
         if (userData) {
-            console.log("Logged In");
             if (
                 formatRole(
                     userData.is_student,
@@ -138,7 +137,7 @@ const CoursePreview = () => {
                             <Box display={{ lg: "none" }}>
                                 <CourseCard
                                     cover={course.cover_image}
-                                    lessons={course.section.length}
+                                    lessons={course.total_videos}
                                     handleEnrollNow={handleEnrollNow}
                                 />
                             </Box>
@@ -409,7 +408,7 @@ const CoursePreview = () => {
                         >
                             <CourseCard
                                 cover={course.cover_image}
-                                lessons={course.section.length}
+                                lessons={course.total_videos}
                                 handleEnrollNow={handleEnrollNow}
                             />
                         </Box>
@@ -462,7 +461,7 @@ function CourseCard({ cover, lessons, handleEnrollNow }) {
                 <Box pt={"2"}>
                     <Text fontWeight={"bold"}>{"What's included"}</Text>
                     <Text display={"flex"} alignItems={"center"} gap={"2"}>
-                        <Icon as={FaPlus} /> {lessons} Lessons
+                        <Icon as={FaPlus} /> {lessons} Videos
                     </Text>
                 </Box>
             </Stack>
