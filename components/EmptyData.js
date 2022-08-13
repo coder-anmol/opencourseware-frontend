@@ -1,7 +1,7 @@
 import { Box, AspectRatio, Heading } from "@chakra-ui/react";
 import Image from "next/image";
 
-const EmptyData = ({ show }) => {
+const EmptyData = ({ show, value = "Empty Data" }) => {
     return (
         <>
             {show && (
@@ -23,7 +23,7 @@ const EmptyData = ({ show }) => {
                             size={"xl"}
                             mt={{ base: "8", md: "12" }}
                         >
-                            Empty Data
+                            {value}
                         </Heading>
                     </Box>
                 </Box>

@@ -723,14 +723,24 @@ const AddVideo = ({ title, isOpen, onClose, sectionId, reload }) => {
                         </Field>
 
                         <HStack justify={"center"}>
-                            <Button
-                                mt={4}
-                                isLoading={props.isSubmitting}
-                                type="submit"
-                                disabled={!canUpload}
-                            >
-                                Submit
-                            </Button>
+                            {canUpload ? (
+                                <Button
+                                    mt={4}
+                                    isLoading={props.isSubmitting}
+                                    type="submit"
+                                >
+                                    Submit
+                                </Button>
+                            ) : (
+                                <Button
+                                    mt={4}
+                                    isLoading={props.isSubmitting}
+                                    type="submit"
+                                    disabled={true}
+                                >
+                                    Submit
+                                </Button>
+                            )}
                         </HStack>
                     </Form>
                 )}

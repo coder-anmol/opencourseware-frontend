@@ -262,6 +262,7 @@ const Navbar = () => {
                                                             type: "success",
                                                         });
                                                         setNavbar(false);
+                                                        router.push("/");
                                                     }}
                                                 >
                                                     Logout

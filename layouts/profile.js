@@ -34,7 +34,7 @@ function ProfileLayout({ children }) {
 
     return (
         <>
-            {!loading && (
+            {!loading && userData && (
                 <>
                     <Header />
                     <Profile list={list}>{children}</Profile>

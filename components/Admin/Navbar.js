@@ -14,7 +14,7 @@ import swal from "@sweetalert/with-react";
 
 const AdminNavbar = ({ onOpen }) => {
     const userData = useStore((state) => state.userData);
-    const logout = useStore((state) => state.logoutUser);
+    const logout = useStore((state) => state.logoutAdmin);
 
     return (
         <HStack

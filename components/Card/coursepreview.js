@@ -10,7 +10,15 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-const CoursePreviewCard = () => {
+const CoursePreviewCard = ({
+    title,
+    description,
+    category,
+    teacherName,
+    teacherProfile,
+    teacherId,
+    coverImage,
+}) => {
     return (
         <Box
             border={"1px"}
@@ -36,8 +44,8 @@ const CoursePreviewCard = () => {
                     overflow={"hidden"}
                 >
                     <Image
-                        alt={"course image"}
-                        src={"/course-default.jpg"}
+                        alt={"Course Cover"}
+                        src={coverImage}
                         layout={"fill"}
                         objectFit={"cover"}
                     />
@@ -52,38 +60,32 @@ const CoursePreviewCard = () => {
                     <Text
                         color={"gray.600"}
                         fontSize={{ sm: "lg", md: "xl", lg: "2xl" }}
+                        textTransform={"capitalize"}
                     >
-                        Course
+                        {category}
                     </Text>
                     <Heading
                         fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
                         noOfLines={{ base: "2" }}
+                        textTransform={"capitalize"}
                     >
-                        Next. JS kdfjk dkslfjsldkf sldk kdjfks dfksd fkds flk f
-                        Next. JS kdfjk dkslfjsldkf sldk kdjfks dfksd fkds flk f
-                        Next. JS kdfjk dkslfjsldkf sldk kdjfks dfksd fkds flk f
-                        Next. JS kdfjk dkslfjsldkf sldk kdjfks dfksd fkds flk f
-                        sdklf{" "}
+                        {title}
                     </Heading>
                     <Text
                         color={"gray.600"}
                         fontSize={{ sm: "lg", md: "xl", lg: "2xl" }}
                         noOfLines={{ base: 1, sm: 2, md: 3, lg: 2 }}
+                        textTransform={"capitalize"}
                     >
-                        Lorem ipsum dolor sjdkfj kdsjf kds ks fjkdsjf jsdkljfsdk
-                        jf skdfj ksdjfksdj kfsdlkfj sdjflsd jfksdjaf kdsljf ksjd
-                        lfkjsdj afl sjdkfjs dkfjskdjfks jdfjsd lfskdjf ksdlfj
-                        ksdjfkjsdlkfjsjd fjlsdkj fkl jdsflsdaj fj dslafsdklflk
-                        jsdafkj sakj fskjd kfjsad kjfjasdljfjds kafjdsa kdjaflkd
-                        fjakdsj fjsal kjdf
+                        {description}
                     </Text>
 
                     <HStack display={{ base: "none", lg: "flex" }}>
-                        <Link href={"/profile"}>
+                        <Link href={`/instructor/${teacherId}`}>
                             <HStack>
                                 <Avatar
-                                    name="Anmol Sharma"
-                                    src=""
+                                    name={teacherName}
+                                    src={teacherProfile}
                                     bg={"primary"}
                                 />
 
@@ -91,8 +93,9 @@ const CoursePreviewCard = () => {
                                     color={"gray.800"}
                                     fontSize={{ sm: "lg", md: "xl", lg: "2xl" }}
                                     noOfLines={{ base: 1 }}
+                                    textTransform={"capitalize"}
                                 >
-                                    Lorem ipsum
+                                    {teacherName}
                                 </Text>
                             </HStack>
                         </Link>
