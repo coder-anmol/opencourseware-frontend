@@ -23,7 +23,7 @@ export async function getStaticProps(context) {
             categories: categoriesData,
             courses: coursesData.reverse(),
         },
-        revalidate: 7200,
+        revalidate: 3600,
     };
 }
 
