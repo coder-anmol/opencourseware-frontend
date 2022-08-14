@@ -12,7 +12,7 @@ import CourseCard from "../Card/course";
 import EmptyData from "../EmptyData";
 import CustomButton from "../Button";
 
-const UserDashboard = ({ enrollments, user, categories, currentCourse }) => {
+const UserDashboard = ({ enrollments, user, currentCourse }) => {
     return (
         <Box my={{ base: "24", lg: "28" }}>
             <Box
@@ -67,15 +67,7 @@ const UserDashboard = ({ enrollments, user, categories, currentCourse }) => {
                             </Heading>
 
                             <Stack gap={4} py={3}>
-                                <CourseCard
-                                    enrollment={currentCourse.course}
-                                    category={
-                                        categories[
-                                            currentCourse.course.course[0]
-                                                .category
-                                        ].category_name
-                                    }
-                                />
+                                <CourseCard enrollment={currentCourse.course} />
                             </Stack>
                         </Box>
                     )}
@@ -132,13 +124,10 @@ const UserDashboard = ({ enrollments, user, categories, currentCourse }) => {
 
                             {/* if enrollments exists */}
                             {enrollments.map((enrollment, i) => {
-                                const category =
-                                    categories[enrollment.course[0].category];
                                 return (
                                     <CourseCard
                                         key={i}
                                         enrollment={enrollment}
-                                        category={category.category_name}
                                     />
                                 );
                             })}

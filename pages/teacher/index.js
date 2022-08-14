@@ -1,10 +1,10 @@
 import AdminWrapper from "@/components/Admin/AdminWrapper";
-import { Heading } from "@chakra-ui/react";
+import Welcome from "@/components/Admin/Welcome";
 
 const Index = () => {
     return (
         <AdminWrapper show={true}>
-            <Heading>Teacher Index</Heading>
+            <Welcome text={"Teacher."} />
         </AdminWrapper>
     );
 };

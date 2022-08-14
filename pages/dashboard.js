@@ -10,7 +10,6 @@ const Dashboard = () => {
     const [dashboard, setDashboard] = useState({
         loading: true,
         userEnrollments: [],
-        categories: [],
         currentCourse: {
             visible: false,
             course: null,
@@ -23,41 +22,41 @@ const Dashboard = () => {
         Axios.get("course-enroll/current-student-all/")
             .then((res) => {
                 const enrollments = res.data.results.reverse();
-                Axios.get("category/all/").then((res) => {
-                    const categories = res.data.results;
 
-                    if (!!userData.history) {
-                        const history = enrollments.filter(
-                            (enrollment) =>
-                                enrollment.course[0].id ==
-                                userData.history.lastWatchedCourse
-                        );
-                        const lastWatchedCourse = history[0];
+                if (!!userData.history) {
+                    const history = enrollments.filter(
+                        (enrollment) =>
+                            enrollment.course[0].id ==
+                            userData.history.lastWatchedCourse
+                    );
 
-                        setDashboard({
-                            loading: false,
-                            userEnrollments: enrollments,
-                            categories: categories,
-                            currentCourse: {
-                                visible: true,
-                                course: lastWatchedCourse,
-                            },
-                        });
-                    } else {
-                        setDashboard({
-                            loading: false,
-                            userEnrollments: enrollments,
-                            categories: categories,
-                            currentCourse: {
-                                visible: false,
-                                course: null,
-                            },
-                        });
+                    let lastWatchedCourse = null;
+                    let visible = false;
+                    if (history.length) {
+                        visible = true;
+                        lastWatchedCourse = history[0];
                     }
-                });
+
+                    setDashboard({
+                        loading: false,
+                        userEnrollments: enrollments,
+                        currentCourse: {
+                            visible: visible,
+                            course: lastWatchedCourse,
+                        },
+                    });
+                } else {
+                    setDashboard({
+                        loading: false,
+                        userEnrollments: enrollments,
+                        currentCourse: {
+                            visible: false,
+                            course: null,
+                        },
+                    });
+                }
             })
             .catch((err) => {
-                console.log(err);
                 swal({
                     icon: "error",
                     title: "Error !!",
@@ -74,7 +73,6 @@ const Dashboard = () => {
                 <UserDashboard
                     enrollments={dashboard.userEnrollments}
                     user={userData}
-                    categories={dashboard.categories}
                     currentCourse={dashboard.currentCourse}
                 />
             )}

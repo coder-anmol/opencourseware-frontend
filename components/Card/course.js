@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-const CourseCard = ({ enrollment, category }) => {
+const CourseCard = ({ enrollment }) => {
     return (
         <Link href={`/watch/${enrollment.course[0].id}`}>
             <Box
@@ -54,7 +54,7 @@ const CourseCard = ({ enrollment, category }) => {
                             fontSize={{ sm: "lg", md: "xl", lg: "2xl" }}
                             textTransform={"capitalize"}
                         >
-                            {category}
+                            {enrollment.course[0].category.category_name}
                         </Text>
                         <Heading
                             fontSize={{ base: "xl", md: "2xl", lg: "3xl" }}
